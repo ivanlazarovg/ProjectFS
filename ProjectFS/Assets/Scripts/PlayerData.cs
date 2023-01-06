@@ -5,7 +5,7 @@ public class PlayerData : ScriptableObject
 {
 	[Header("Gravity")]
 	[HideInInspector] public float gravityStrength; //Downwards force (gravity) needed for the desired jumpHeight and jumpTimeToApex.
-	[HideInInspector] public float gravity; //Strength of the player's gravity as a multiplier of gravity (set in ProjectSettings/Physics2D).
+	public float gravity; //Strength of the player's gravity as a multiplier of gravity (set in ProjectSettings/Physics2D).
 												 //Also the value the player's rigidbody2D.gravityScale is set to.
 	[Space(5)]
 	public float fallGravity; //Multiplier to the player's gravityScale when falling.
@@ -67,9 +67,6 @@ public class PlayerData : ScriptableObject
 	{
 		//Calculate gravity strength using the formula (gravity = 2 * jumpHeight / timeToJumpApex^2) 
 		gravityStrength = -(2 * jumpHeight) / (jumpTimeToApex * jumpTimeToApex);
-
-		//Calculate the rigidbody's gravity scale (ie: gravity strength relative to unity's gravity value, see project settings/Physics)
-		gravity = gravityStrength / Physics.gravity.y;
 
 		//Calculate are run acceleration & deceleration forces using formula: amount = ((1 / Time.fixedDeltaTime) * acceleration) / runMaxSpeed
 		runAccelAmount = (50 * runAcceleration) / runMaxSpeed;

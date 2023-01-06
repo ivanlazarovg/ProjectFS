@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour
 
 	private void Start()
 	{
-		SetGravityScale(Data.gravity);
+		SetGravity(Data.gravity);
 		IsFacingRight = true;
 	}
 
@@ -162,36 +162,36 @@ public class PlayerController : MonoBehaviour
 		//Higher gravity if we've released the jump input or are falling
 		if (IsSliding)
 		{
-			SetGravityScale(0);
+			SetGravity(0);
 		}
 		else if (rb.velocity.y < 0 && _moveInput.y < 0)
 		{
 			//Much higher gravity if holding down
-			SetGravityScale(Data.fastFallGravity);
+			SetGravity(Data.fastFallGravity);
 			//Caps maximum fall speed, so when falling over large distances we don't accelerate to insanely high speeds
 			rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, -Data.maxFastFallSpeed));
 		}
 		else if (_isJumpCut)
 		{
 			//Higher gravity if jump button released
-			SetGravityScale(Data.jumpCutGravity);
+			SetGravity(Data.jumpCutGravity);
 			rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, -Data.maxFallSpeed));
 		}
 		else if ((IsJumping || IsWallJumping || _isJumpFalling) && Mathf.Abs(rb.velocity.y) < Data.jumpHangTimeThreshold)
 		{
-			SetGravityScale(Data.jumpHangGravity);
+			SetGravity(Data.jumpHangGravity);
 		}
 		else if (rb.velocity.y < 0)
 		{
 			//Higher gravity if falling
-			SetGravityScale(Data.fallGravity);
+			SetGravity(Data.fallGravity);
 			//Caps maximum fall speed, so when falling over large distances we don't accelerate to insanely high speeds
 			rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, -Data.maxFallSpeed));
 		}
 		else
 		{
 			//Default gravity if standing on a platform or moving upwards
-			SetGravityScale(-10);
+			SetGravity(Data.gravity);
 		}
 		#endregion
 	}
@@ -219,7 +219,7 @@ public class PlayerController : MonoBehaviour
 	}
 	#endregion
 
-	public void SetGravityScale(float scale)
+	public void SetGravity(float scale)
 	{
 		Physics.gravity = new Vector3(0f, scale, 0f);
 	}
