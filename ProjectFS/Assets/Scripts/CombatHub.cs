@@ -27,6 +27,9 @@ public class CombatHub : MonoBehaviour
     public float chargedAttackKnockbackStrength = 5;
     public float chargedAttackKnockbackStrengthUp = 2;
 
+    float attackTimer = 0;
+    public float attackPauseTime;
+
     public Animator swordAnimator;
     public LayerMask enemyLayers;
 
@@ -78,21 +81,27 @@ public class CombatHub : MonoBehaviour
         }
         else if (Input.GetMouseButtonUp(0))
         {
-            if (meleeAttackTimer < meleeChargeThresholdTime)
+            if (attackTimer > attackPauseTime)
             {
-                LightMeleeAttack();
+                if (meleeAttackTimer < meleeChargeThresholdTime)
+                {
+                    StartCoroutine(LightMeleeAttack());
+                }
+                else
+                {
+                    ChargedMeleeAttack();
+                }
+                meleeAttackTimer = 0;
+                attackTimer = 0;
             }
-            else
-            {
-                ChargedMeleeAttack();
-            }
-            meleeAttackTimer = 0;
         }
+        attackTimer += Time.deltaTime;
     }
 
-    void LightMeleeAttack()
+    IEnumerator LightMeleeAttack()
     {
         swordAnimator.SetTrigger("LightAttack");
+        yield return new WaitForSeconds(0.11f);
 
         Collider[] enemiesHit = Physics.OverlapSphere(attackPoint.position, lightAttackRange, enemyLayers, QueryTriggerInteraction.Collide);
 

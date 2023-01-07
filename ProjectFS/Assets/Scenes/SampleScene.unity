@@ -285,12 +285,13 @@ MonoBehaviour:
   attackPoint: {fileID: 368883737}
   lightAttackRange: 0.3
   lightAttackDamage: 1
-  lightAttackKnockbackStrength: 1
-  lightAttackKnockbackStrengthUp: 2
+  lightAttackKnockbackStrength: 0
+  lightAttackKnockbackStrengthUp: 1
   chargedAttackRange: 0.8
   chargedAttackDamage: 1
   chargedAttackKnockbackStrength: 7
   chargedAttackKnockbackStrengthUp: 6
+  attackPauseTime: 0.1
   swordAnimator: {fileID: 368883741}
   enemyLayers:
     serializedVersion: 2
@@ -646,7 +647,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ff059fc016fcf8d4a88162b27e334cba, type: 2}
+  - {fileID: 2100000, guid: f06cd023dbd9a44478af4dc5c32b50b0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
