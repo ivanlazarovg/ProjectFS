@@ -112,6 +112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+  gravity: 0.01
 --- !u!54 &5485900024220703749
 Rigidbody:
   m_ObjectHideFlags: 0
