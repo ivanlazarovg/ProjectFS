@@ -29,29 +29,47 @@ public class CombatHub : MonoBehaviour
 
     public Animator swordAnimator;
     public LayerMask enemyLayers;
+
+    public Transform aimTransform;
+    float aimAngle = 0;
+    [SerializeField] float aimSpeed;
+    [SerializeField] float aimRadius;
+    [SerializeField] float aimPanStart;
+    [SerializeField] float aimPanEnd;
+
+    float aimTime;
+    float aimTimer;
+    float _aimPanStart;
+    float _aimPanEnd;
+    bool isAiming = false;
+
+    PlayerController playerController;
     void Start()
     {
         Physics.IgnoreLayerCollision(0, 6);
+        playerController = GetComponent<PlayerController>();
         
     }
 
     void Update()
     {
-        if (Input.GetMouseButton(1))
+        if (!isAiming)
         {
-            rangeAttackTimer += Time.deltaTime;
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                isAiming = true;
+            }
+            aimTransform.gameObject.SetActive(false);
         }
-        else if (Input.GetMouseButtonUp(1))
+        else
         {
-            if(rangeAttackTimer < rangedChargeThresholdTime)
+            aimTransform.gameObject.SetActive(true);
+            PanAim();
+            if (Input.GetKeyDown(KeyCode.R))
             {
-                LaunchLightProjectile();
+                LaunchProjectile();
+                isAiming = false;
             }
-            else
-            {
-                LaunchBouncingProjectile();
-            }
-            rangeAttackTimer = 0;
         }
 
         if (Input.GetMouseButton(0))
@@ -114,31 +132,40 @@ public class CombatHub : MonoBehaviour
         }
     }
 
-    void LaunchLightProjectile()
+    void LaunchProjectile()
     {
         GameObject lightProjectile = Instantiate(lightProjectilePrefab, launchTransform.position, Quaternion.identity);
 
-        Vector3 mousePosInput = Input.mousePosition;
-        mousePosInput.z = 20;
-        mousePos = new Vector3(cam.ScreenToWorldPoint(mousePosInput).x, cam.ScreenToWorldPoint(mousePosInput).y, -4.74f);
-
-        Vector3 direction = mousePos - lightProjectile.transform.position;
+        Vector3 direction = aimTransform.position - lightProjectile.transform.position;
 
         lightProjectile.GetComponent<Rigidbody>().velocity = direction.normalized * lightProjectile.GetComponent<LightProjectile>().speed;
         
     }
 
-    void LaunchBouncingProjectile()
+    void PanAim()
     {
-        GameObject chargedProjectile = Instantiate(chargedProjectilePrefab, launchTransform.position, Quaternion.identity);
+        if (!playerController.IsFacingRight)
+        {
+            _aimPanStart = aimPanStart;
+            _aimPanEnd = aimPanEnd;
+        }
+        else
+        {
+            _aimPanStart = -aimPanStart;
+            _aimPanEnd = -aimPanEnd;
+        }
 
-        Vector3 mousePosInput = Input.mousePosition;
-        mousePosInput.z = 20;
-        mousePos = new Vector3(cam.ScreenToWorldPoint(mousePosInput).x, cam.ScreenToWorldPoint(mousePosInput).y, -4.74f);
+        aimTimer += Time.deltaTime * aimSpeed;
 
-        Vector3 direction = mousePos - chargedProjectile.transform.position;
+        aimTime = Mathf.PingPong(aimTimer, 1);
 
-        chargedProjectile.GetComponent<Rigidbody>().velocity = direction.normalized * chargedProjectile.GetComponent<ChargedProjectile>().speed;
+        aimAngle = Mathf.Lerp(_aimPanStart, _aimPanEnd, aimTime);
+
+        float x = Mathf.Sin(aimAngle) * aimRadius;
+        float y = Mathf.Cos(aimAngle) * aimRadius;
+        float z = 0;
+
+        aimTransform.position = transform.position + new Vector3(x, y, z);
     }
 
     void Shield()
