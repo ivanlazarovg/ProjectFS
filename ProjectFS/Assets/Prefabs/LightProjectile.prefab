@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 3834051798868915189}
   - component: {fileID: 738421443536515597}
   - component: {fileID: 7197384943320916010}
-  - component: {fileID: 837121405962616863}
   - component: {fileID: 153806873367895585}
   - component: {fileID: 5485900024220703749}
+  - component: {fileID: 592043570657023366}
   m_Layer: 6
   m_Name: LightProjectile
   m_TagString: Untagged
@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 6764048023700685427}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.242, y: 3.76, z: -4.631}
-  m_LocalScale: {x: 0.2057963, y: 0.2057963, z: 0.2057963}
+  m_LocalScale: {x: 0.205, y: 0.2057963, z: 0.2057963}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: f06cd023dbd9a44478af4dc5c32b50b0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -86,19 +86,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &837121405962616863
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6764048023700685427}
-  m_Material: {fileID: 13400000, guid: 63440808f671ea8478825dc55f5ec762, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &153806873367895585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,3 +116,16 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &592043570657023366
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6764048023700685427}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.99999994, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
