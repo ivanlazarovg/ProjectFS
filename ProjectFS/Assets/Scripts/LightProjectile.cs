@@ -7,10 +7,14 @@ public class LightProjectile : MonoBehaviour
     public float speed;
     public float gravity;
     Rigidbody rb;
+    private float collisionCounter;
+    public float collisionCounterLimit;
+    public PhysicMaterial material;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        material.bounceCombine = PhysicMaterialCombine.Maximum;
     }
 
     private void Update()
@@ -23,8 +27,13 @@ public class LightProjectile : MonoBehaviour
         if(collision.gameObject.GetComponent<Enemy>() != null)
         {
             collision.gameObject.GetComponent<Enemy>().LoseHealth(1f);
+            Destroy(this.gameObject);
         }
-        Destroy(this.gameObject);
+        collisionCounter++;
+        if (collisionCounter > collisionCounterLimit)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }
 

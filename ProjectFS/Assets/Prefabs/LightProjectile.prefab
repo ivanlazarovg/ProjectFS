@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 3834051798868915189}
   - component: {fileID: 738421443536515597}
   - component: {fileID: 7197384943320916010}
-  - component: {fileID: 153806873367895585}
   - component: {fileID: 5485900024220703749}
   - component: {fileID: 592043570657023366}
+  - component: {fileID: -15819248121631275}
   m_Layer: 6
   m_Name: LightProjectile
   m_TagString: Untagged
@@ -86,20 +86,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &153806873367895585
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6764048023700685427}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f192b9f1c81ac7e40920a49f1f88fc51, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 10
-  gravity: 0.01
 --- !u!54 &5485900024220703749
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -114,7 +100,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 8
   m_CollisionDetection: 0
 --- !u!65 &592043570657023366
 BoxCollider:
@@ -123,9 +109,25 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6764048023700685427}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 63440808f671ea8478825dc55f5ec762, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.99999994, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-15819248121631275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6764048023700685427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f192b9f1c81ac7e40920a49f1f88fc51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 14
+  gravity: 0.018
+  collisionCounterLimit: 3
+  material: {fileID: 13400000, guid: 63440808f671ea8478825dc55f5ec762, type: 2}
