@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f192b9f1c81ac7e40920a49f1f88fc51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 14
+  speed: 12
   gravity: 0.018
   collisionCounterLimit: 3
   material: {fileID: 13400000, guid: 63440808f671ea8478825dc55f5ec762, type: 2}
