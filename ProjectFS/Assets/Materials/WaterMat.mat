@@ -179,9 +179,9 @@ Material:
     - _WaterFalloff: 5.08
     - _WaterSmoothness: 0.12
     - _WaterSpecular: -0.1
-    - _WaveHeight: 0.48
-    - _WaveSpeed: 0.42
-    - _WaveTile: -5.8
+    - _WaveHeight: 0.26
+    - _WaveSpeed: 0.15
+    - _WaveTile: -12.52
     - _WavesAmount: 6.42
     - _WavesAmplitude: 0.03
     - _ZWrite: 1
@@ -202,9 +202,9 @@ Material:
     - _SpecularColor: {r: 0.39215687, g: 0.39215687, b: 0.39215687, a: 1}
     - _TintColor: {r: 1, g: 1, b: 1, a: 1}
     - _Vector0: {r: 0, g: 0.12, b: 0, a: 0}
-    - _WaterColor: {r: 0.072312206, g: 0.4770382, b: 0.6132076, a: 1}
+    - _WaterColor: {r: 0, g: 0.7536235, b: 1, a: 1}
     - _WaterEdgeClamp: {r: 0, g: 0, b: 0, a: 1}
     - _WaveDirection: {r: 0, g: -2.66, b: 0, a: 0}
-    - _WaveStretch: {r: 0.19, g: 0.05, b: 0, a: 0}
+    - _WaveStretch: {r: 0, g: -0.2, b: 0, a: 0}
     - _waterEdgeClamp: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

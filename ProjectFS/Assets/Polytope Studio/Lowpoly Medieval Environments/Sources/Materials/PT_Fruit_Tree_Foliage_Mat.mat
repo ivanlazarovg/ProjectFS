@@ -13,6 +13,7 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _CUSTOMWIND1_ON
+  - _TRANSLUCENCYONOFF_ON
   m_InvalidKeywords:
   - _ALPHAPREMULTIPLY_ON
   - _CUSTOMWIND_ON
@@ -98,8 +99,8 @@ Material:
     - _SnowGradient: 0.83
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _TRANSLUCENCYONOFF: 0
-    - _TransAmbient: 0.7
+    - _TRANSLUCENCYONOFF: 1
+    - _TransAmbient: 1
     - _TransDirect: 1
     - _TransNormalDistortion: 0.1
     - _TransScattering: 2

@@ -104,10 +104,10 @@ Material:
     - _TRANSLUCENCYONOFF: 1
     - _TransAmbient: 0.7
     - _TransDirect: 1
-    - _TransNormalDistortion: 0.1
-    - _TransScattering: 2
+    - _TransNormalDistortion: 0.29
+    - _TransScattering: 13.4
     - _TransShadow: 0.5
-    - _Translucency: 7.8
+    - _Translucency: 10.9
     - _UVSec: 0
     - _WINDMASKONOFF: 0
     - _WindDensity: 0.01
