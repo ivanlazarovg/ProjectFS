@@ -52,6 +52,8 @@ public class PlayerController : MonoBehaviour
 
 	[Header("Layers & Tags")]
 	[SerializeField] private LayerMask _groundLayer;
+
+	[SerializeField] private Animator characterAnimator;
 	#endregion
 
 	private void Awake()
@@ -81,7 +83,22 @@ public class PlayerController : MonoBehaviour
 		_moveInput.y = Input.GetAxisRaw("Vertical");
 
 		if (_moveInput.x != 0)
+		{
 			CheckDirectionToFace(_moveInput.x > 0);
+			if (!IsJumping)
+			{
+				characterAnimator.SetBool("isRun", true);
+            }
+            else
+            {
+				characterAnimator.SetBool("isRun", false);
+			}
+        }
+        else
+        {
+			characterAnimator.SetBool("isRun", false);
+		}
+        
 
 		if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.J))
 		{
@@ -103,6 +120,11 @@ public class PlayerController : MonoBehaviour
 				print("isGrounded");
 				LastOnGroundTime = Data.coyoteTime; //if so sets the lastGrounded to coyoteTime
 			}
+			characterAnimator.SetBool("isJump", false);
+        }
+        else
+        {
+			characterAnimator.SetBool("isJump", true);
 		}
 		#endregion
 

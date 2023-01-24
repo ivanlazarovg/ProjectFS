@@ -29,6 +29,7 @@ public class CombatHub : MonoBehaviour
 
     float attackTimer = 0;
     public float attackPauseTime;
+    public float attackAnimationDelay;
 
     public Animator swordAnimator;
     public LayerMask enemyLayers;
@@ -47,6 +48,7 @@ public class CombatHub : MonoBehaviour
     bool isAiming = false;
 
     PlayerController playerController;
+    [SerializeField] private Animator characterAnimator;
     void Start()
     {
         Physics.IgnoreLayerCollision(0, 6);
@@ -85,6 +87,7 @@ public class CombatHub : MonoBehaviour
             {
                 if (meleeAttackTimer < meleeChargeThresholdTime)
                 {
+                    characterAnimator.SetTrigger("attack");
                     StartCoroutine(LightMeleeAttack());
                 }
                 else
@@ -101,7 +104,7 @@ public class CombatHub : MonoBehaviour
     IEnumerator LightMeleeAttack()
     {
         swordAnimator.SetTrigger("LightAttack");
-        yield return new WaitForSeconds(0.11f);
+        yield return new WaitForSeconds(attackAnimationDelay);
 
         Collider[] enemiesHit = Physics.OverlapSphere(attackPoint.position, lightAttackRange, enemyLayers, QueryTriggerInteraction.Collide);
 
@@ -148,7 +151,8 @@ public class CombatHub : MonoBehaviour
         Vector3 direction = aimTransform.position - lightProjectile.transform.position;
 
         lightProjectile.GetComponent<Rigidbody>().velocity = direction.normalized * lightProjectile.GetComponent<LightProjectile>().speed;
-        
+        characterAnimator.SetTrigger("attack");
+
     }
 
     void PanAim()
