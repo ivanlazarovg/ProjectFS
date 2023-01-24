@@ -44,3 +44,33 @@ The following packages were updated:
   com.unity.collab-proxy from version 1.13.5 to 1.17.6
   com.unity.timeline from version 1.6.2 to 1.7.2
   com.unity.visualscripting from version 1.7.6 to 1.7.8
+
+=== Tue Jan 24 21:46:37 2023
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.2d.animation from version 3.2.6 to 8.0.5
+  com.unity.2d.pixel-perfect from version 2.1.0 to 5.0.2
+  com.unity.2d.psdimporter from version 2.1.6 to 7.0.3
+  com.unity.2d.spriteshape from version 3.0.14 to 8.0.1
+  com.unity.collab-proxy from version 1.2.16 to 1.17.6
+  com.unity.ide.rider from version 1.1.4 to 3.0.16
+  com.unity.ide.vscode from version 1.2.3 to 1.2.5
+  com.unity.test-framework from version 1.1.20 to 1.1.33
+  com.unity.textmeshpro from version 2.1.1 to 3.0.6
+  com.unity.timeline from version 1.2.17 to 1.7.2
+
+=== Tue Jan 24 21:46:37 2023
+
+Packages were changed.
+Update Mode: mergeDefaultDependencies
+
+The following packages were added:
+  com.unity.2d.animation@8.0.5
+  com.unity.2d.pixel-perfect@5.0.2
+  com.unity.2d.psdimporter@7.0.3
+  com.unity.2d.sprite@1.0.0
+  com.unity.2d.spriteshape@8.0.1
+  com.unity.2d.tilemap@1.0.0
