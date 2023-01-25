@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class CombatHub : MonoBehaviour
 {
@@ -30,8 +32,8 @@ public class CombatHub : MonoBehaviour
     float attackTimer = 0;
     public float attackPauseTime;
     public float attackAnimationDelay;
+    public float speedWhileAttacking;
 
-    public Animator swordAnimator;
     public LayerMask enemyLayers;
 
     public Transform aimTransform;
@@ -46,8 +48,10 @@ public class CombatHub : MonoBehaviour
     float _aimPanStart;
     float _aimPanEnd;
     bool isAiming = false;
+    bool canAttack;
 
     PlayerController playerController;
+    public PlayerData playerData;
     [SerializeField] private Animator characterAnimator;
     void Start()
     {
@@ -77,33 +81,52 @@ public class CombatHub : MonoBehaviour
             }
         }
 
+
+
+
+
+
         if (Input.GetMouseButton(0))
         {
             meleeAttackTimer += Time.deltaTime;
         }
-        else if (Input.GetMouseButtonUp(0))
+        else if (Input.GetMouseButtonUp(0) && canAttack)
         {
-            if (attackTimer > attackPauseTime)
+            if (meleeAttackTimer < meleeChargeThresholdTime)
             {
-                if (meleeAttackTimer < meleeChargeThresholdTime)
-                {
-                    characterAnimator.SetTrigger("attack");
-                    StartCoroutine(LightMeleeAttack());
-                }
-                else
-                {
-                    ChargedMeleeAttack();
-                }
-                meleeAttackTimer = 0;
-                attackTimer = 0;
+                characterAnimator.SetTrigger("attack");
+                StartCoroutine(LightMeleeAttack());
             }
+            else
+            {
+                ChargedMeleeAttack();
+            }
+            meleeAttackTimer = 0;
+            attackTimer = 0;
+
         }
         attackTimer += Time.deltaTime;
     }
 
+    public void FixedUpdate()
+    {
+        if (characterAnimator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+        {
+            if (characterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
+            {
+                playerController._runMaxSpeed = speedWhileAttacking;
+                canAttack = false;
+            }
+        }
+        else
+        {
+            canAttack = true;
+            playerController._runMaxSpeed = playerData.runMaxSpeed;
+        }
+    }
+
     IEnumerator LightMeleeAttack()
     {
-        swordAnimator.SetTrigger("LightAttack");
         yield return new WaitForSeconds(attackAnimationDelay);
 
         Collider[] enemiesHit = Physics.OverlapSphere(attackPoint.position, lightAttackRange, enemyLayers, QueryTriggerInteraction.Collide);
@@ -124,7 +147,6 @@ public class CombatHub : MonoBehaviour
 
     void ChargedMeleeAttack()
     {
-        swordAnimator.SetTrigger("LightAttack");
 
         Collider[] enemiesHit = Physics.OverlapSphere(attackPoint.position, chargedAttackRange, enemyLayers, QueryTriggerInteraction.Collide);
 

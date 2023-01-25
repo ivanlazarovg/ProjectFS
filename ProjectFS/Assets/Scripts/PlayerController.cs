@@ -54,6 +54,7 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private LayerMask _groundLayer;
 
 	[SerializeField] private Animator characterAnimator;
+	public float _runMaxSpeed;
 	#endregion
 
 	private void Awake()
@@ -65,6 +66,7 @@ public class PlayerController : MonoBehaviour
 	{
 		SetGravity(Data.gravity);
 		IsFacingRight = true;
+		_runMaxSpeed = Data.runMaxSpeed;
 	}
 
 	private void Update()
@@ -249,7 +251,8 @@ public class PlayerController : MonoBehaviour
 	private void Run(float lerpAmount)
 	{
 		//Calculate the direction we want to move in and our desired velocity
-		float targetSpeed = _moveInput.x * Data.runMaxSpeed;
+		float targetSpeed = _moveInput.x * _runMaxSpeed;
+		print(_runMaxSpeed);
 		//We can reduce our control using Lerp() - this smooths changes to are direction and speed
 		targetSpeed = Mathf.Lerp(rb.velocity.x, targetSpeed, lerpAmount);
 

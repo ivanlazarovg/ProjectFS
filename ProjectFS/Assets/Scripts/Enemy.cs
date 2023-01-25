@@ -15,6 +15,12 @@ public class Enemy : MonoBehaviour
     float _knockbackStrength;
     Vector3 knockbackVelocity;
 
+    public Animator enemyAnimator;
+    public Transform playerTransform;
+
+    private bool isPlayerBehind;
+    private bool isFacingPlayer;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -22,9 +28,20 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
+        CheckDirectionToFace();
+
         if (health <= 0)
         {
             Destroy(gameObject);
+        }
+
+        if(playerTransform.position.x > transform.position.x)
+        {
+            isPlayerBehind = true;
+        }
+        else
+        {
+            isPlayerBehind = false;
         }
 
         if (knockbacked)
@@ -41,6 +58,7 @@ public class Enemy : MonoBehaviour
 
     public void LoseHealth(float healthLost)
     {
+        enemyAnimator.SetTrigger("isHit");
         health -= healthLost;
     }
 
@@ -57,5 +75,22 @@ public class Enemy : MonoBehaviour
     {
         yield return new WaitForSeconds(knockbackRecoverySpeed);
         knockbacked = false;
+    }
+
+    public void Turn()
+    {
+        Vector3 rotation = transform.rotation.eulerAngles;
+        rotation.y *= -1;
+        transform.rotation = Quaternion.Euler(rotation);
+
+        isFacingPlayer = !isFacingPlayer;
+    }
+
+    public void CheckDirectionToFace()
+    {
+        if(isPlayerBehind != isFacingPlayer)
+        {
+            Turn();
+        }
     }
 }
