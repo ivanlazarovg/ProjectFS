@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using Pathfinding;
 
 public class Enemy : MonoBehaviour
 {
@@ -29,6 +31,16 @@ public class Enemy : MonoBehaviour
     private void Update()
     {
         CheckDirectionToFace();
+
+        print(rb.velocity.x);
+        if(GetComponent<AIDestinationSetter>().target != null)
+        {
+            enemyAnimator.SetBool("isRunning",true);
+        }
+        else
+        {
+            enemyAnimator.SetBool("isRunning", false);
+        }
 
         if (health <= 0)
         {
