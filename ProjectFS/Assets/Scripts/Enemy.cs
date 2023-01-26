@@ -23,6 +23,7 @@ public class Enemy : MonoBehaviour
     private bool isPlayerBehind;
     private bool isFacingPlayer;
 
+    public float distanceToAttack;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -33,14 +34,7 @@ public class Enemy : MonoBehaviour
         CheckDirectionToFace();
 
         print(rb.velocity.x);
-        if(GetComponent<AIDestinationSetter>().target != null)
-        {
-            enemyAnimator.SetBool("isRunning",true);
-        }
-        else
-        {
-            enemyAnimator.SetBool("isRunning", false);
-        }
+        
 
         if (health <= 0)
         {
@@ -54,6 +48,24 @@ public class Enemy : MonoBehaviour
         else
         {
             isPlayerBehind = false;
+        }
+
+        if(Vector3.Distance(transform.position, playerTransform.position) <= distanceToAttack)
+        {
+            enemyAnimator.SetTrigger("isAttacking");
+            enemyAnimator.SetBool("isRunning", false);
+            Attack();
+        }
+        else
+        {
+            if (GetComponent<AIDestinationSetter>().target != null)
+            {
+                enemyAnimator.SetBool("isRunning", true);
+            }
+            else
+            {
+                enemyAnimator.SetBool("isRunning", false);
+            }
         }
 
         if (knockbacked)
@@ -104,5 +116,15 @@ public class Enemy : MonoBehaviour
         {
             Turn();
         }
+    }
+
+    public void Attack()
+    {
+        Debug.Log(enemyAnimator.runtimeAnimatorController.animationClips[3].name);
+        if (enemyAnimator.runtimeAnimatorController.animationClips[3].events[0].isFiredByLegacy)
+        {
+            Debug.Log("Attack");
+        }
+        
     }
 }
