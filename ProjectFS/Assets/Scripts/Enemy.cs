@@ -3,82 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Pathfinding;
+using System.Threading;
 
-public class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour
 {
     public float health = 5f;
-    private Rigidbody rb;
+    public Rigidbody rb;
     public bool knockbacked;
-    [SerializeField] float knockbackRecoverySpeed = 0.5f;
-    [SerializeField] float knockbackLerpTime;
+    public float knockbackRecoverySpeed = 0.5f;
+    public float knockbackLerpTime;
 
 
     Vector3 direction;
-    float _knockbackStrength;
-    Vector3 knockbackVelocity;
+    public float _knockbackStrength;
+    public Vector3 knockbackVelocity;
 
     public Animator enemyAnimator;
+    public Animator playerAnimator;
     public Transform playerTransform;
 
-    private bool isPlayerBehind;
-    private bool isFacingPlayer;
+    public bool isPlayerBehind;
+    public bool isFacingPlayer;
 
     public float distanceToAttack;
-    private void Start()
-    {
-        rb = GetComponent<Rigidbody>();
-    }
 
-    private void Update()
-    {
-        CheckDirectionToFace();
+    public float attackDamage;
 
-        print(rb.velocity.x);
-        
+    public float defaultSpeed;
 
-        if (health <= 0)
-        {
-            Destroy(gameObject);
-        }
-
-        if(playerTransform.position.x > transform.position.x)
-        {
-            isPlayerBehind = true;
-        }
-        else
-        {
-            isPlayerBehind = false;
-        }
-
-        if(Vector3.Distance(transform.position, playerTransform.position) <= distanceToAttack)
-        {
-            enemyAnimator.SetTrigger("isAttacking");
-            enemyAnimator.SetBool("isRunning", false);
-            Attack();
-        }
-        else
-        {
-            if (GetComponent<AIDestinationSetter>().target != null)
-            {
-                enemyAnimator.SetBool("isRunning", true);
-            }
-            else
-            {
-                enemyAnimator.SetBool("isRunning", false);
-            }
-        }
-
-        if (knockbacked)
-        {
-            knockbackVelocity.x = Mathf.Lerp(knockbackVelocity.x, 0f, Time.deltaTime * knockbackLerpTime);
-
-            rb.velocity = new Vector3(knockbackVelocity.x, rb.velocity.y, rb.velocity.z);
-        }
-        else
-        {
-            rb.velocity = new Vector3(0, 0, 0);
-        }
-    }
 
     public void LoseHealth(float healthLost)
     {
@@ -118,13 +70,6 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void Attack()
-    {
-        Debug.Log(enemyAnimator.runtimeAnimatorController.animationClips[3].name);
-        if (enemyAnimator.runtimeAnimatorController.animationClips[3].events[0].isFiredByLegacy)
-        {
-            Debug.Log("Attack");
-        }
-        
-    }
+    public abstract void Attack();
+
 }

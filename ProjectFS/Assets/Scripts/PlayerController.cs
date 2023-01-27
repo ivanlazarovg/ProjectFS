@@ -119,7 +119,6 @@ public class PlayerController : MonoBehaviour
 			//Ground Check
 			if (Physics.OverlapBox(_groundCheckPoint.position, _groundCheckSize, Quaternion.identity, _groundLayer).Length != 0 && !IsJumping) //checks if set box overlaps with ground
 			{
-				print("isGrounded");
 				LastOnGroundTime = Data.coyoteTime; //if so sets the lastGrounded to coyoteTime
 			}
 			characterAnimator.SetBool("isJump", false);
@@ -252,7 +251,6 @@ public class PlayerController : MonoBehaviour
 	{
 		//Calculate the direction we want to move in and our desired velocity
 		float targetSpeed = _moveInput.x * _runMaxSpeed;
-		print(_runMaxSpeed);
 		//We can reduce our control using Lerp() - this smooths changes to are direction and speed
 		targetSpeed = Mathf.Lerp(rb.velocity.x, targetSpeed, lerpAmount);
 
