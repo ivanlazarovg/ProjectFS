@@ -15,7 +15,6 @@ public abstract class Enemy : MonoBehaviour
 
 
     Vector3 direction;
-    public float _knockbackStrength;
     public Vector3 knockbackVelocity;
 
     public Animator enemyAnimator;
@@ -32,7 +31,7 @@ public abstract class Enemy : MonoBehaviour
     public float defaultSpeed;
 
 
-    public void LoseHealth(float healthLost)
+    public virtual void LoseHealth(float healthLost)
     {
         enemyAnimator.SetTrigger("isHit");
         health -= healthLost;
