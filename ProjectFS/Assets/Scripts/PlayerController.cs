@@ -52,9 +52,12 @@ public class PlayerController : MonoBehaviour
 
 	[Header("Layers & Tags")]
 	[SerializeField] private LayerMask _groundLayer;
+	[SerializeField] private LayerMask _mushroomLayer;
 
 	[SerializeField] private Animator characterAnimator;
 	public float _runMaxSpeed;
+	private bool mushroomJumpTriggered = false;
+	float mushroomJumpTimer = 0;
 	#endregion
 
 	private void Awake()
@@ -158,7 +161,7 @@ public class PlayerController : MonoBehaviour
 			IsWallJumping = false;
 			_isJumpCut = false;
 			_isJumpFalling = false;
-			Jump();
+			Jump(Data.jumpForce);
 		}
 		//WALL JUMP
 		/*else if (CanWallJump() && LastPressedJumpTime > 0)
@@ -217,6 +220,8 @@ public class PlayerController : MonoBehaviour
 			SetGravity(Data.gravity);
 		}
 		#endregion
+
+		MushroomJump();
 	}
 
 	private void FixedUpdate()
@@ -226,6 +231,7 @@ public class PlayerController : MonoBehaviour
 		else
 			Run(1);
 
+		
 	}
 
 	#region INPUT CALLBACKS
@@ -298,7 +304,7 @@ public class PlayerController : MonoBehaviour
 		IsFacingRight = !IsFacingRight;
 	}
 
-	private void Jump()
+	private void Jump(float force)
 	{
 		//Ensures we can't call Jump multiple times from one press
 		LastPressedJumpTime = 0;
@@ -308,7 +314,7 @@ public class PlayerController : MonoBehaviour
 		//We increase the force applied if we are falling
 		//This means we'll always feel like we jump the same amount 
 		//(setting the player's Y velocity to 0 beforehand will likely work the same, but I find this more elegant :D)
-		float force = Data.jumpForce;
+		
 		if (rb.velocity.y < 0)
 			force -= rb.velocity.y;
 
@@ -353,6 +359,25 @@ public class PlayerController : MonoBehaviour
 
 		RB.AddForce(movement * Vector2.up);
 	}*/
+
+	private void MushroomJump()
+    {
+		mushroomJumpTimer += Time.deltaTime;
+		RaycastHit hit;
+		if(Physics.Raycast(_groundCheckPoint.position, -transform.up, out hit, 0.2f, _mushroomLayer) && !mushroomJumpTriggered)
+		{
+			print("jumped");
+			Jump(hit.collider.gameObject.GetComponent<Mushroom>().impulseForce);
+			mushroomJumpTriggered = true;
+			mushroomJumpTimer = 0;
+        }
+
+		if(mushroomJumpTimer > 0.15f)
+        {
+			mushroomJumpTriggered = false;
+        }
+		
+    }
 	#endregion
 
 
