@@ -14,7 +14,6 @@ public class PlayerCombat : MonoBehaviour
     public GameObject lightProjectilePrefab;
     public GameObject chargedProjectilePrefab;
     public Transform launchTransform;
-    Vector3 mousePos;
     public Camera cam;
     public Transform attackPoint;
 
@@ -45,6 +44,7 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] float aimRadius;
     [SerializeField] float aimPanStart;
     [SerializeField] float aimPanEnd;
+    private Vector3 mousePos;
 
     float aimTime;
     float aimTimer;
@@ -80,10 +80,10 @@ public class PlayerCombat : MonoBehaviour
         else
         {
             aimTransform.gameObject.SetActive(true);
-            PanAim();
             if (Input.GetKeyDown(KeyCode.R))
             {
                 LaunchProjectile();
+
                 isAiming = false;
             }
         }
@@ -173,38 +173,18 @@ public class PlayerCombat : MonoBehaviour
     {
         GameObject lightProjectile = Instantiate(lightProjectilePrefab, launchTransform.position, Quaternion.identity);
 
-        Vector3 direction = aimTransform.position - lightProjectile.transform.position;
+        Vector3 mousePosInput = Input.mousePosition;
+        mousePosInput.z = 20;
+        mousePos = new Vector3(cam.ScreenToWorldPoint(mousePosInput).x, cam.ScreenToWorldPoint(mousePosInput).y, -4.74f);
+
+        Vector3 direction = mousePos - lightProjectile.transform.position;
 
         lightProjectile.GetComponent<Rigidbody>().velocity = direction.normalized * lightProjectile.GetComponent<LightProjectile>().speed;
         characterAnimator.SetTrigger("attack");
 
     }
 
-    void PanAim()
-    {
-        if (!playerController.IsFacingRight)
-        {
-            _aimPanStart = aimPanStart;
-            _aimPanEnd = aimPanEnd;
-        }
-        else
-        {
-            _aimPanStart = -aimPanStart;
-            _aimPanEnd = -aimPanEnd;
-        }
 
-        aimTimer += Time.deltaTime * aimSpeed;
-
-        aimTime = Mathf.PingPong(aimTimer, 1);
-
-        aimAngle = Mathf.Lerp(_aimPanStart, _aimPanEnd, aimTime);
-
-        float x = Mathf.Sin(aimAngle) * aimRadius;
-        float y = Mathf.Cos(aimAngle) * aimRadius;
-        float z = 0;
-
-        aimTransform.position = transform.position + new Vector3(x, y, z);
-    }
 
     void Shield()
     {

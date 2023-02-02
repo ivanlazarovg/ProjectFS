@@ -94,16 +94,13 @@ public class SpeechManager : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
             responseHandler.isResponding = true;
             responseHandler.ShowResponses(speech.responses);
-            Cursor.visible = true;
             yield return new WaitUntil(() => responseHandler.isResponding == false);
             if (responseHandler.pickedResponse.speechObject == null)
             {
-                Cursor.visible = false;
                 ExitSpeech(speakerObject, speaker, _textUI, speech);
             }
             else
             {
-                Cursor.visible = false;
                 Run(responseHandler.pickedResponse.speechObject, speechUI.textUI, speechUI.typeSpeed, speakerObject);
             }
         }
@@ -123,16 +120,6 @@ public class SpeechManager : MonoBehaviour
 
     private void Update()
     {
-        if (isTalking)
-        {
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.None;
-        }
-        else
-        {
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-        }
         
     }
 

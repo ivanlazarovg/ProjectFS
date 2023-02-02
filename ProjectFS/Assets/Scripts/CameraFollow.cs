@@ -7,6 +7,12 @@ public class CameraFollow : MonoBehaviour
     private Vector3 velocity = Vector3.zero;
 
     [SerializeField] private Transform target;
+
+    private void Start()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
     private void FixedUpdate()
     {
         Vector3 targetPosition = target.position + offset;
