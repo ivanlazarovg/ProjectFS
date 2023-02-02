@@ -188,11 +188,12 @@ public class PlayerCombat : MonoBehaviour
 
     void Aim()
     {
-        //mousePos = new Vector3(cam.ScreenToWorldPoint(Input.mousePosition).x, cam.ScreenToWorldPoint(Input.mousePosition).y, -4.74f);
-
         mousePos = new Vector3(cam.WorldToScreenPoint(aimTransform.position).x, cam.WorldToScreenPoint(aimTransform.position).y, distanceFromCam);
+
         Vector3 direction = Input.mousePosition - mousePos;
+
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
         aimTransform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
@@ -218,5 +219,4 @@ public class PlayerCombat : MonoBehaviour
         }
     }
 
-    
 }
