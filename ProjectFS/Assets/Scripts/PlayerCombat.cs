@@ -52,6 +52,7 @@ public class PlayerCombat : MonoBehaviour
     float _aimPanEnd;
     bool isAiming = false;
     bool canAttack;
+    public float distanceFromCam;
 
     PlayerController playerController;
     public PlayerData playerData;
@@ -69,17 +70,18 @@ public class PlayerCombat : MonoBehaviour
 
     void Update()
     {
+        Aim();
         if (!isAiming)
         {
             if (Input.GetKeyDown(KeyCode.R))
             {
                 isAiming = true;
             }
-            aimTransform.gameObject.SetActive(false);
+            aimTransform.gameObject.GetComponentInChildren<MeshRenderer>().enabled = false;
         }
         else
         {
-            aimTransform.gameObject.SetActive(true);
+            aimTransform.gameObject.GetComponentInChildren<MeshRenderer>().enabled = true;
             if (Input.GetKeyDown(KeyCode.R))
             {
                 LaunchProjectile();
@@ -182,6 +184,16 @@ public class PlayerCombat : MonoBehaviour
         lightProjectile.GetComponent<Rigidbody>().velocity = direction.normalized * lightProjectile.GetComponent<LightProjectile>().speed;
         characterAnimator.SetTrigger("attack");
 
+    }
+
+    void Aim()
+    {
+        //mousePos = new Vector3(cam.ScreenToWorldPoint(Input.mousePosition).x, cam.ScreenToWorldPoint(Input.mousePosition).y, -4.74f);
+
+        mousePos = new Vector3(cam.WorldToScreenPoint(aimTransform.position).x, cam.WorldToScreenPoint(aimTransform.position).y, distanceFromCam);
+        Vector3 direction = Input.mousePosition - mousePos;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        aimTransform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
 

@@ -58,6 +58,7 @@ public class PlayerController : MonoBehaviour
 	public float _runMaxSpeed;
 	private bool mushroomJumpTriggered = false;
 	float mushroomJumpTimer = 0;
+	public Transform rotatePoint;
 	#endregion
 
 	private void Awake()
@@ -300,6 +301,9 @@ public class PlayerController : MonoBehaviour
 		Vector3 scale = transform.localScale;
 		scale.x *= -1;
 		transform.localScale = scale;
+		Vector3 rotatePointScale = rotatePoint.localScale;
+		rotatePointScale.x *= -1;
+		rotatePoint.localScale = rotatePointScale;
 
 		IsFacingRight = !IsFacingRight;
 	}
