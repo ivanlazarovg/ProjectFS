@@ -82,7 +82,7 @@ public class PlayerCombat : MonoBehaviour
         else
         {
             aimTransform.gameObject.GetComponentInChildren<MeshRenderer>().enabled = true;
-            if (Input.GetKeyDown(KeyCode.R))
+            if (Input.GetMouseButtonDown(1))
             {
                 LaunchProjectile();
 
@@ -119,7 +119,7 @@ public class PlayerCombat : MonoBehaviour
         {
             if (characterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
             {
-                playerController._runMaxSpeed = speedWhileAttacking;
+                //playerController._runMaxSpeed = speedWhileAttacking;
                 canAttack = false;
             }
         }

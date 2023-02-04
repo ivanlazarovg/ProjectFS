@@ -10,7 +10,6 @@ public class SpikeScriptableObject : ScriptableObject
     public float fallingSpeed;
     public float impactDamage;
     public LayerMask playerMask;
-    public Material material;
     public Color color1;
     public Color color2;
 }

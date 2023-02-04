@@ -11,12 +11,15 @@ public class FallingSpike : MonoBehaviour
     private PlayerCombat playerCombat;
 
     public SpikeScriptableObject spikeParams;
-    private Material _spikeMaterial;
+    private MaterialPropertyBlock propertyBlock;
+    private Renderer meshRenderer;
 
     private void Start()
     {
-        _spikeMaterial = spikeParams.material;
+        meshRenderer = GetComponent<MeshRenderer>();
+        propertyBlock = new MaterialPropertyBlock();
         playerCombat = FindObjectOfType<PlayerCombat>();
+        SetPropertyBlockColor(spikeParams.color1);
     }
 
     void FixedUpdate()
@@ -24,9 +27,8 @@ public class FallingSpike : MonoBehaviour
         if (isActivated)
         {
             timer += Time.deltaTime;
-            colorLerptimer += Time.deltaTime / spikeParams.fallThreshold;
-
-            _spikeMaterial.SetColor("_Color", Color.Lerp(spikeParams.color1, spikeParams.color2, colorLerptimer));
+            
+            SetPropertyBlockColor(Color.Lerp(spikeParams.color1, spikeParams.color2, timer/spikeParams.fallThreshold));
         }
         if (timer >= spikeParams.fallThreshold)
         {
@@ -52,5 +54,14 @@ public class FallingSpike : MonoBehaviour
         {
             playerCombat.TakeDamage(spikeParams.impactDamage);
         }
+    }
+
+    public void SetPropertyBlockColor(Color color)
+    {
+        meshRenderer.GetPropertyBlock(propertyBlock);
+
+        propertyBlock.SetColor("_Color", color);
+
+        meshRenderer.SetPropertyBlock(propertyBlock);
     }
 }

@@ -222,7 +222,7 @@ public class PlayerController : MonoBehaviour
 		}
 		#endregion
 
-		MushroomJump();
+		RayCastChecks();
 	}
 
 	private void FixedUpdate()
@@ -364,7 +364,7 @@ public class PlayerController : MonoBehaviour
 		RB.AddForce(movement * Vector2.up);
 	}*/
 
-	private void MushroomJump()
+	/*private void MushroomJump()
     {
 		mushroomJumpTimer += Time.deltaTime;
 		RaycastHit hit;
@@ -381,7 +381,7 @@ public class PlayerController : MonoBehaviour
 			mushroomJumpTriggered = false;
         }
 		
-    }
+    }*/
 	#endregion
 
 
@@ -406,6 +406,20 @@ public class PlayerController : MonoBehaviour
 	private bool CanJumpCut()
 	{
 		return IsJumping && rb.velocity.y > 0;
+	}
+
+	public void RayCastChecks()
+    {
+		RaycastHit hit;
+		if (Physics.Raycast(_groundCheckPoint.position, -transform.up, out hit, 0.2f))
+		{
+			if(hit.collider.gameObject.GetComponent<FallingPlatform>() != null)
+            {
+				StartCoroutine(hit.collider.gameObject.GetComponent<FallingPlatform>().Fall());
+
+			}
+        }
+
 	}
 
 	/*private bool CanWallJumpCut()

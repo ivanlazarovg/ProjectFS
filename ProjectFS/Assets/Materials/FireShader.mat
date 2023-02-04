@@ -87,7 +87,7 @@ Material:
     - _GradientSmoothness: 0.64
     - _Metallic: 0
     - _Mode: 0
-    - _NoiseSmoothening: 0.15
+    - _NoiseSmoothening: 0.2
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0

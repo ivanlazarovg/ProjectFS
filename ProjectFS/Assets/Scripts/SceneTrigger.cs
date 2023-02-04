@@ -13,10 +13,6 @@ public class SceneTrigger : MonoBehaviour
     public bool isAdded = false;
     public Speaker speaker;
 
-    private void Start()
-    {
-    }
-
     private void Update()
     {
 
