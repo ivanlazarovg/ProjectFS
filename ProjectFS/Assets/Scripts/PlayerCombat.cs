@@ -63,7 +63,6 @@ public class PlayerCombat : MonoBehaviour
 
     void Start()
     {
-        Physics.IgnoreLayerCollision(0, 6);
         playerController = GetComponent<PlayerController>();
         
     }
@@ -217,6 +216,7 @@ public class PlayerCombat : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        characterAnimator.SetTrigger("hurt");
     }
 
 }
