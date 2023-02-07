@@ -61,6 +61,10 @@ public class PlayerCombat : MonoBehaviour
     [Space(5)]
     public Slider healthBarSlider;
 
+    private LightProjectile lastProjectile;
+
+    public int missileMode;
+
     void Start()
     {
         playerController = GetComponent<PlayerController>();
@@ -89,26 +93,48 @@ public class PlayerCombat : MonoBehaviour
             }
         }
 
-
-        if (Input.GetMouseButton(0))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            meleeAttackTimer += Time.deltaTime;
+            missileMode = 1;
         }
-        else if (Input.GetMouseButtonUp(0) && canAttack)
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            if (meleeAttackTimer < meleeChargeThresholdTime)
-            {
-                characterAnimator.SetTrigger("attack");
-                StartCoroutine(LightMeleeAttack());
-            }
-            else
-            {
-                ChargedMeleeAttack();
-            }
-            meleeAttackTimer = 0;
-            attackTimer = 0;
-
+            missileMode= 2;
         }
+
+        if (missileMode == 1)
+        {
+            if (Input.GetMouseButton(0))
+            {
+                meleeAttackTimer += Time.deltaTime;
+            }
+            else if (Input.GetMouseButtonUp(0) && canAttack)
+            {
+                if (meleeAttackTimer < meleeChargeThresholdTime)
+                {
+                    characterAnimator.SetTrigger("attack");
+                    StartCoroutine(LightMeleeAttack());
+                }
+                else
+                {
+                    ChargedMeleeAttack();
+                }
+                meleeAttackTimer = 0;
+                attackTimer = 0;
+
+            }
+        }
+        else if(missileMode == 2) 
+        {
+            if (lastProjectile != null)
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Teleport();
+                }
+            }
+        }
+
         attackTimer += Time.deltaTime;
     }
 
@@ -173,6 +199,7 @@ public class PlayerCombat : MonoBehaviour
     void LaunchProjectile()
     {
         GameObject lightProjectile = Instantiate(lightProjectilePrefab, launchTransform.position, Quaternion.identity);
+        lastProjectile = lightProjectile.GetComponent<LightProjectile>();
 
         Vector3 mousePosInput = Input.mousePosition;
         mousePosInput.z = 20;
@@ -217,6 +244,12 @@ public class PlayerCombat : MonoBehaviour
             Destroy(gameObject);
         }
         characterAnimator.SetTrigger("hurt");
+    }
+
+    public void Teleport()
+    {
+        transform.position = lastProjectile.transform.position;
+        Destroy(lastProjectile.gameObject);
     }
 
 }
