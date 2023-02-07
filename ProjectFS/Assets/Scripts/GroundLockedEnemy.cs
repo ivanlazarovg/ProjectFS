@@ -9,9 +9,9 @@ public class GroundLockedEnemy : Enemy
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        enemyAnimator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Vector3.Distance(transform.position, playerTransform.position) <= distanceToAttack)

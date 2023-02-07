@@ -13,10 +13,9 @@ public abstract class Enemy : MonoBehaviour
     public float knockbackRecoverySpeed = 0.5f;
     public float knockbackLerpTime;
 
-
-    Vector3 direction;
     public Vector3 knockbackVelocity;
 
+    [HideInInspector]
     public Animator enemyAnimator;
     public Animator playerAnimator;
     public Transform playerTransform;
@@ -39,6 +38,7 @@ public abstract class Enemy : MonoBehaviour
 
     public void Knockback(Transform knockbackSourcePoint, float knockbackStrength, float knockBackStrengthUp)
     {
+        Vector3 direction;
         direction = this.transform.position - knockbackSourcePoint.position;
         knockbacked = true;
         rb.AddForce((Vector3.up + direction.normalized * 1.3f).normalized  * knockBackStrengthUp, ForceMode.Impulse);
