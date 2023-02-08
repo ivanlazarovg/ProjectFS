@@ -5,7 +5,6 @@ using Pathfinding;
 
 public class RangedFlyingEnemy : Enemy
 {
-    private Rigidbody rb;
     public AIPath path;
     public Transform launchTransform;
     public GameObject projectilePrefab;
@@ -20,7 +19,6 @@ public class RangedFlyingEnemy : Enemy
         rb.useGravity = false;
         enemyAnimator = GetComponent<Animator>();
     }
-
     
     void Update()
     {
@@ -36,6 +34,11 @@ public class RangedFlyingEnemy : Enemy
         if (health <= 0)
         {
             Destroy(gameObject);
+        }
+
+        if(health <= 2)
+        {
+            rb.useGravity = true;
         }
     }
 
