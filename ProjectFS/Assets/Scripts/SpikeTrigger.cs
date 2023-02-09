@@ -16,4 +16,10 @@ public class SpikeTrigger : MonoBehaviour
             spike.isActivated = true;
         }
     }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(transform.position, new Vector3(1.9f, 1.6f, 1.4f));
+    }
 }
