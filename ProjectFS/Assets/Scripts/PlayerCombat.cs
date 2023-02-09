@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerCombat : MonoBehaviour
@@ -65,9 +66,12 @@ public class PlayerCombat : MonoBehaviour
 
     public int missileMode;
 
+    private PlayerInteraction playerInteraction;
+
     void Start()
     {
         playerController = GetComponent<PlayerController>();
+        playerInteraction = FindObjectOfType<PlayerInteraction>();
         
     }
 
@@ -241,7 +245,7 @@ public class PlayerCombat : MonoBehaviour
         healthBarSlider.value -= attackDamage;
         if(healthBarSlider.value <= 0)
         {
-            Destroy(gameObject);
+            StartCoroutine(playerInteraction.DeathCondition());
         }
         characterAnimator.SetTrigger("hurt");
     }
@@ -251,5 +255,7 @@ public class PlayerCombat : MonoBehaviour
         transform.position = lastProjectile.transform.position;
         Destroy(lastProjectile.gameObject);
     }
+
+    
 
 }
