@@ -22,9 +22,9 @@ TagManager:
   - Mushroom
   - Moveable
   - enemyProjectile
-  - NarrativeObject
-  - 
-  - 
+  - InteractableObject
+  - ObservableObject
+  - SideScrollerUILayer
   - 
   - 
   - 

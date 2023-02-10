@@ -23,6 +23,8 @@ public class PlayerInteraction : MonoBehaviour
     private InteractionUIScriptableObject currentInteractionUIObject;
     private Transform interactionUItransform;
     public InteractionUI interactionUI;
+    public Camera objectCloseUpCam;
+    private Camera mainCam;
 
     [SerializeField]
     private float narrObjectInteractionRadius;
@@ -30,6 +32,8 @@ public class PlayerInteraction : MonoBehaviour
     private void Start()
     {
         playerTransform = GameObject.Find("Player").transform;
+        objectCloseUpCam.enabled = false;
+        mainCam = Camera.main;
     }
 
     private void Update()
@@ -110,7 +114,9 @@ public class PlayerInteraction : MonoBehaviour
             
             if (Input.GetKeyDown(KeyCode.E))
             {
-
+                objectCloseUpCam.enabled = true;
+                narrObject.SetUp(objectCloseUpCam, playerTransform);
+                mainCam.enabled = false;
             }
         }
         else
@@ -124,6 +130,14 @@ public class PlayerInteraction : MonoBehaviour
         }
     }
 
-    
+    public void DisengageInspect(Transform playerTransform, GameObject objectInspect)
+    {
+        objectInspect.SetActive(false);
+        objectCloseUpCam.enabled = false;
+        mainCam.enabled = true;
+        playerTransform.GetComponent<PlayerCombat>().enabled = true;
+        playerTransform.GetComponent<PlayerController>().enabled = true;
+        FindObjectOfType<PlayerInteraction>().enabled = true;
+    }
 
 }
