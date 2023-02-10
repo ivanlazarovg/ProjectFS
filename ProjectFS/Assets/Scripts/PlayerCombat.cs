@@ -68,11 +68,18 @@ public class PlayerCombat : MonoBehaviour
 
     private PlayerInteraction playerInteraction;
 
+    [SerializeField]
+    private MissileModeUI[] missileModeOutlines;
+
+    public Color activeMissileModeColor;
+    public Color inactiveMissileModeColor;
+
     void Start()
     {
         playerController = GetComponent<PlayerController>();
         playerInteraction = FindObjectOfType<PlayerInteraction>();
-        
+        missileModeOutlines = FindObjectsOfType<MissileModeUI>();
+        SetMissileModeUI();
     }
 
     void Update()
@@ -100,10 +107,12 @@ public class PlayerCombat : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             missileMode = 1;
+            SetMissileModeUI();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            missileMode= 2;
+            missileMode = 2;
+            SetMissileModeUI();
         }
 
         if (missileMode == 1)
@@ -125,7 +134,6 @@ public class PlayerCombat : MonoBehaviour
                 }
                 meleeAttackTimer = 0;
                 attackTimer = 0;
-
             }
         }
         else if(missileMode == 2) 
@@ -256,6 +264,20 @@ public class PlayerCombat : MonoBehaviour
         Destroy(lastProjectile.gameObject);
     }
 
+    void SetMissileModeUI()
+    {
+        foreach (var item in missileModeOutlines)
+        {
+            if(missileMode == item.id)
+            {
+                item.SetColor(activeMissileModeColor);
+            }
+            else
+            {
+                item.SetColor(inactiveMissileModeColor);
+            }
+        }
+    }
     
 
 }
