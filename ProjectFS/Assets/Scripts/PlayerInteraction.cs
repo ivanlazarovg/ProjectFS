@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -14,6 +15,14 @@ public class PlayerInteraction : MonoBehaviour
     public RespawnPoint lastRespawnPoint;
     public Transform playerTransform;
     public TextMeshProUGUI textMesh;
+    public LayerMask narrativeObjectMask;
+    private Collider[] narrativeObjectColliders;
+    private bool isMovingObject = false;
+    public Color highlightColor;
+
+    private InteractionUIScriptableObject currentInteractionUIObject;
+    private Transform interactionUItransform;
+    public InteractionUI interactionUI;
 
     private void Start()
     {
@@ -22,36 +31,8 @@ public class PlayerInteraction : MonoBehaviour
 
     private void Update()
     {
-        moveableObjectColliders = Physics.OverlapSphere(transform.position, 1f, moveableObjectMask, QueryTriggerInteraction.Collide);
-        
-        if (moveableObjectColliders.Length != 0 && carriedObject == null)
-        {
-            if (moveableObjectColliders[0] != null)
-            {
-                if (Input.GetKeyDown(KeyCode.E))
-                {
-                    carriedObject = moveableObjectColliders[0].gameObject;
-                    carriedObject.transform.SetParent(transform);
-                    carriedObject.GetComponent<Rigidbody>().isKinematic = true;
-                    carriedObject.GetComponent<BoxCollider>().enabled = false;
-                }
-            }
-            
-        }
-
-        if (carriedObject != null)
-        {
-            carriedObject.transform.position = carryTransform.position;
-
-            if (Input.GetKeyDown(KeyCode.Y))
-            {
-                carriedObject.GetComponent<BoxCollider>().enabled = true;
-                carriedObject.transform.SetParent(null);
-                carriedObject.GetComponent<Rigidbody>().isKinematic = false;
-                carriedObject = null;
-            }
-        }
-
+        MovingObjectsInteraction();
+        NarrativeObjectInteraction();
     }
 
     public IEnumerator DeathCondition()
@@ -73,5 +54,73 @@ public class PlayerInteraction : MonoBehaviour
         playerTransform.GetChild(0).gameObject.SetActive(true);
         textMesh.enabled = false;
     }
+
+    public void MovingObjectsInteraction()
+    {
+        moveableObjectColliders = Physics.OverlapSphere(playerTransform.position, 1f, moveableObjectMask, QueryTriggerInteraction.Collide);
+
+        if (moveableObjectColliders.Length != 0 && carriedObject == null)
+        {
+            if (moveableObjectColliders[0] != null)
+            {
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    carriedObject = moveableObjectColliders[0].gameObject;
+                    carriedObject.transform.SetParent(transform);
+                    carriedObject.GetComponent<Rigidbody>().isKinematic = true;
+                    carriedObject.GetComponent<BoxCollider>().enabled = false;
+                    isMovingObject = true;
+                }
+            }
+
+        }
+
+        if (carriedObject != null)
+        {
+            carriedObject.transform.position = carryTransform.position;
+
+            if (Input.GetKeyDown(KeyCode.Y))
+            {
+                carriedObject.GetComponent<BoxCollider>().enabled = true;
+                carriedObject.transform.SetParent(null);
+                carriedObject.GetComponent<Rigidbody>().isKinematic = false;
+                carriedObject = null;
+                isMovingObject = false;
+            }
+        }
+    }
+
+    public void NarrativeObjectInteraction()
+    {
+        narrativeObjectColliders = Physics.OverlapSphere(playerTransform.position, 5f, narrativeObjectMask, QueryTriggerInteraction.Collide);
+
+        if (!isMovingObject && narrativeObjectColliders.Length > 0)
+        {
+            NarrativeObjectInteractable narrObject = narrativeObjectColliders[narrativeObjectColliders.Length - 1]
+                .gameObject.GetComponent<NarrativeObjectInteractable>();
+
+            narrObject.highlightedColor = highlightColor;
+            narrObject.isHighlighted = true;
+            currentInteractionUIObject = narrObject.GetUI(out interactionUItransform);
+            interactionUI.gameObject.SetActive(true);
+            interactionUI.ShowUI(currentInteractionUIObject, interactionUItransform);
+            
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+
+            }
+        }
+        else
+        {
+            foreach(var item in FindObjectsOfType<NarrativeObjectInteractable>())
+            {
+                item.isHighlighted = false;
+            }
+
+            interactionUI.gameObject.SetActive(false);
+        }
+    }
+
+    
 
 }
