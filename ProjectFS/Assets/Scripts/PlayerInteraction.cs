@@ -24,6 +24,9 @@ public class PlayerInteraction : MonoBehaviour
     private Transform interactionUItransform;
     public InteractionUI interactionUI;
 
+    [SerializeField]
+    private float narrObjectInteractionRadius;
+
     private void Start()
     {
         playerTransform = GameObject.Find("Player").transform;
@@ -92,7 +95,7 @@ public class PlayerInteraction : MonoBehaviour
 
     public void NarrativeObjectInteraction()
     {
-        narrativeObjectColliders = Physics.OverlapSphere(playerTransform.position, 5f, narrativeObjectMask, QueryTriggerInteraction.Collide);
+        narrativeObjectColliders = Physics.OverlapSphere(playerTransform.position, narrObjectInteractionRadius, narrativeObjectMask, QueryTriggerInteraction.Collide);
 
         if (!isMovingObject && narrativeObjectColliders.Length > 0)
         {
