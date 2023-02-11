@@ -35,14 +35,9 @@ public class RangedFlyingEnemy : Enemy
         {
             Destroy(gameObject);
         }
-
-        if(health <= 2)
-        {
-            rb.useGravity = true;
-        }
     }
 
-    public override void Attack()
+    public void Attack()
     {
         canAttack = false;
         StartCoroutine(LaunchProjectile());
@@ -50,14 +45,14 @@ public class RangedFlyingEnemy : Enemy
 
     private IEnumerator LaunchProjectile()
     {
-        yield return new WaitForSeconds(attackInterval);
-
         GameObject projectile = Instantiate(projectilePrefab, launchTransform.position, Quaternion.identity);
         SetProjectileValues(projectile);
 
         Vector3 direction = destinationSetter.target.transform.position - projectile.transform.position;
 
         projectile.GetComponent<Rigidbody>().velocity = direction.normalized * projectile.GetComponent<EnemyProjectile>().speed;
+
+        yield return new WaitForSeconds(attackInterval);
 
         canAttack = true;
     }

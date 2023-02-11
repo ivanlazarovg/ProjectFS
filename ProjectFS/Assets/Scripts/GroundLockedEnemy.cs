@@ -62,7 +62,7 @@ public class GroundLockedEnemy : Enemy
         }
 
     }
-    public override void Attack()
+    public void Attack()
     {
         if (Vector3.Distance(transform.position, playerTransform.position) <= distanceToAttack)
         {

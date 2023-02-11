@@ -16,7 +16,7 @@ public class MeleeFlyingEnemy : Enemy
         
     }
 
-    public override void Attack()
+    public void Attack()
     {
 
     }
