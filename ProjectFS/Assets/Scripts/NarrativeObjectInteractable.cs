@@ -52,7 +52,4 @@ public class NarrativeObjectInteractable : MonoBehaviour
         FindObjectOfType<PlayerInteraction>().enabled = false;
     }
 
-    
-
-
 }

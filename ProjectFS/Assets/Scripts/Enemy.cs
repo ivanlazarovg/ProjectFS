@@ -32,7 +32,10 @@ public abstract class Enemy : MonoBehaviour
 
     public virtual void LoseHealth(float healthLost)
     {
-        enemyAnimator.SetTrigger("isHit");
+        if (enemyAnimator != null)
+        {
+            enemyAnimator.SetTrigger("isHit");
+        }
         health -= healthLost;
     }
 
