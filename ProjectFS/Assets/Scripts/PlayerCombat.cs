@@ -181,7 +181,10 @@ public class PlayerCombat : MonoBehaviour
 
                 enemy.LoseHealth(lightAttackDamage);
 
-                enemy.Knockback(transform, lightAttackKnockbackStrength, lightAttackKnockbackStrengthUp);
+                if (enemy.rb != null)
+                {
+                    enemy.Knockback(transform, lightAttackKnockbackStrength, lightAttackKnockbackStrengthUp);
+                }
 
             }   
         }

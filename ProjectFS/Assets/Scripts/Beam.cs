@@ -4,65 +4,35 @@ using UnityEngine;
 
 public class Beam : MonoBehaviour
 {
-    [SerializeField] LineRenderer beamRenderer;
-    public float castSpeed;
-    public Transform heartTransform;
-    public Transform targetObject;
-    public bool isDissolving = false;
-    float acceleration = 1;
-    [SerializeField] float accelerationRate = 0.01f;
-    float t = 0;
-    public float dissipateSpeed;
-    public Material beamMat;
-    float alphaOrigin;
-    [SerializeField] float alphaTarget;
-    [SerializeField] float thinOutFloat;
+    public Collider beamcollider;
+    public MeshRenderer meshRenderer;
+    public Material material;
+    public Color holoColor;
+    public Color activatedColor;
 
     private void Start()
     {
-        beamRenderer.SetPosition(beamRenderer.positionCount - 1, heartTransform.position);
-        beamMat.SetFloat("_Alpha", 1);
-        alphaOrigin = beamMat.GetFloat("_Alpha");
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        Cast();
-
-        if (isDissolving)
-        {
-            Dissolve();
-        }
+        material = meshRenderer.material;
+        meshRenderer.enabled = false;
     }
 
-    public void Cast()
+    public void AimAtPlayer(Vector3 playerPosition)
     {
-        beamRenderer.SetPosition(0, heartTransform.position);
-        acceleration += accelerationRate;
-        float time = castSpeed * Time.deltaTime * acceleration;
-        Vector3 movingPosition = Vector3.MoveTowards(beamRenderer.GetPosition(beamRenderer.positionCount - 1), targetObject.position, time);
-        beamRenderer.SetPosition(beamRenderer.positionCount - 1, movingPosition);
-        if(Vector3.Distance(targetObject.position, beamRenderer.GetPosition(beamRenderer.positionCount - 1)) <= 0.01f)
-        {
-            //targetObject.parent.GetComponent<Dissolve>().isDissolving = true;
-        }
+        meshRenderer.enabled = true;
+        material.color = holoColor;
+
+        Vector3 direction = playerPosition - transform.position;
+
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
     }
 
-    public void Dissolve()
+    public void Activate()
     {
-        t += Time.deltaTime * dissipateSpeed;
-        beamMat.SetFloat("_Alpha", Mathf.Lerp(alphaOrigin, alphaTarget, t));
-        beamRenderer.startWidth -= thinOutFloat;
-        beamRenderer.endWidth -= thinOutFloat;
-        if(beamMat.GetFloat("_Alpha") <= alphaTarget)
-        {
-            Destroy(this.gameObject);
-        }
+        material.color = activatedColor;
+        beamcollider.enabled = true;
     }
 
-    public void SetTarget(Transform target, Transform heart)
-    {
-        targetObject = target;
-        heartTransform = heart;
-    }
 }
