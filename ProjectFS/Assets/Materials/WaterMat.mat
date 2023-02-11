@@ -156,7 +156,7 @@ Material:
     - _Metallic: 0
     - _Mode: 0
     - _NormalLiteSpeed: 0.007
-    - _NormalScale: 0.039132025
+    - _NormalScale: 0
     - _NormalSpeed: 0.007
     - _NormalSpeed1: 0.007
     - _Normallitetile: 0.27
@@ -202,8 +202,8 @@ Material:
     - _SpecularColor: {r: 0.39215687, g: 0.39215687, b: 0.39215687, a: 1}
     - _TintColor: {r: 1, g: 1, b: 1, a: 1}
     - _Vector0: {r: 0, g: 0.12, b: 0, a: 0}
-    - _WaterColor: {r: 0, g: 0.7536235, b: 1, a: 1}
-    - _WaterEdgeClamp: {r: 0, g: 0, b: 0, a: 1}
+    - _WaterColor: {r: 1, g: 1, b: 1, a: 1}
+    - _WaterEdgeClamp: {r: 1, g: 1, b: 1, a: 1}
     - _WaveDirection: {r: 0, g: -2.66, b: 0, a: 0}
     - _WaveStretch: {r: 0, g: -0.2, b: 0, a: 0}
     - _waterEdgeClamp: {r: 0, g: 0, b: 0, a: 0}

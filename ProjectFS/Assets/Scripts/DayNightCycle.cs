@@ -176,12 +176,12 @@ public class DayNightCycle : MonoBehaviour
 
             if (!cloudIsOn )
             {
-                CloudCoroutine = StartCoroutine(CloudCoverageAdjust());
+                //CloudCoroutine = StartCoroutine(CloudCoverageAdjust());
             }
 
             float t = 0f;
             t += Time.deltaTime * lerpSpeed;
-            cloudMat.SetFloat("_CloudCoverage", Mathf.Lerp(cloudMat.GetFloat("_CloudCoverage"), cloudCoverageTarget, t));
+            //cloudMat.SetFloat("_CloudCoverage", Mathf.Lerp(cloudMat.GetFloat("_CloudCoverage"), cloudCoverageTarget, t));
 
             TimeScaling();
 
@@ -221,7 +221,7 @@ public class DayNightCycle : MonoBehaviour
             MoonIntensitySet();
             RiverEdgeSet();
             FogSet();
-            CloudColorSet();
+            //CloudColorSet();
             NormalScaleSet();
             WaterColorSet();
         }
