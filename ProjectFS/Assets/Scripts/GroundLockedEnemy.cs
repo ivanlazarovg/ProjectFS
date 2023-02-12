@@ -12,6 +12,7 @@ public class GroundLockedEnemy : Enemy
         destinationSetter = GetComponent<AIDestinationSetter>();
         rb = GetComponent<Rigidbody>();
         enemyAnimator = GetComponent<Animator>();
+        health = enemyParams.health;
     }
 
     void Update()
@@ -39,11 +40,6 @@ public class GroundLockedEnemy : Enemy
         CheckDirectionToFace();
 
         GetComponent<AIPath>().maxSpeed = enemyParams.defaultSpeed;
-
-        if (enemyParams.health <= 0)
-        {
-            Destroy(gameObject);
-        }
 
         if (playerTransform.position.x > transform.position.x)
         {

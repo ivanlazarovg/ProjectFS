@@ -68,7 +68,7 @@ public class PlayerCombat : MonoBehaviour
 
     private LightProjectile lastProjectile;
 
-    public int missileMode;
+    public int missileMode = 1;
 
     private PlayerInteraction playerInteraction;
 
@@ -83,6 +83,7 @@ public class PlayerCombat : MonoBehaviour
     private float staminaTimer;
     public float staminaRegain;
 
+    private Dictionary<KeyCode, int> missileModeKeys;
     void Start()
     {
         staminaTimer = 2;
@@ -90,6 +91,8 @@ public class PlayerCombat : MonoBehaviour
         playerController = GetComponent<PlayerController>();
         playerInteraction = FindObjectOfType<PlayerInteraction>();
         missileModeOutlines = FindObjectsOfType<MissileModeUI>();
+        SetUpDictionaryKeys();
+        missileMode = 1;
         SetMissileModeUI();
     }
 
@@ -116,17 +119,6 @@ public class PlayerCombat : MonoBehaviour
 
                 isAiming = false;
             }
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            missileMode = 1;
-            SetMissileModeUI();
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            missileMode = 2;
-            SetMissileModeUI();
         }
 
         if (missileMode == 1)
@@ -163,6 +155,8 @@ public class PlayerCombat : MonoBehaviour
                 }
             }
         }
+
+        MissileModeInput();
 
         attackTimer += Time.deltaTime;
 
@@ -263,7 +257,6 @@ public class PlayerCombat : MonoBehaviour
     }
 
 
-
     void Shield()
     {
 
@@ -341,6 +334,25 @@ public class PlayerCombat : MonoBehaviour
             healthBarSlider.value = startHealth;
         }
     }
-    
 
+    private void SetUpDictionaryKeys()
+    {
+        missileModeKeys = new Dictionary<KeyCode, int>
+        {
+            { KeyCode.Alpha1, 1 },
+            { KeyCode.Alpha2, 2 }
+        };
+    }
+
+    public void MissileModeInput()
+    {
+        foreach (var kvp in missileModeKeys)
+        {
+            if (Input.GetKeyDown(kvp.Key))
+            {
+                missileMode = kvp.Value;
+                SetMissileModeUI();
+            }
+        }
+    }
 }

@@ -11,6 +11,7 @@ public abstract class Enemy : MonoBehaviour
     public bool knockbacked;
 
     public Vector3 knockbackVelocity;
+    public float health;
 
     [HideInInspector]
     public Animator enemyAnimator;
@@ -28,7 +29,11 @@ public abstract class Enemy : MonoBehaviour
         {
             enemyAnimator.SetTrigger("isHit");
         }
-        enemyParams.health -= healthLost;
+        health -= healthLost;
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void Knockback(Transform knockbackSourcePoint, float knockbackStrength, float knockBackStrengthUp)

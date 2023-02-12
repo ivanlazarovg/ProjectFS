@@ -15,6 +15,7 @@ public class LaserEnemy : Enemy
     void Start()
     {
         beam = GetComponentInChildren<Beam>();
+        health = enemyParams.health;
     }
 
     void Update()
@@ -22,11 +23,6 @@ public class LaserEnemy : Enemy
         if (!isInCycle)
         {
             isPlayerInAttackZone();
-        }
-
-        if (enemyParams.health <= 0)
-        {
-            Destroy(gameObject);
         }
     }
 

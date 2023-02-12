@@ -29,8 +29,11 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField]
     private float narrObjectInteractionRadius;
 
+
+
     private void Start()
     {
+        
         playerTransform = GameObject.Find("Player").transform;
         objectCloseUpCam.enabled = false;
         mainCam = Camera.main;
@@ -139,5 +142,6 @@ public class PlayerInteraction : MonoBehaviour
         playerTransform.GetComponent<PlayerController>().enabled = true;
         FindObjectOfType<PlayerInteraction>().enabled = true;
     }
+
 
 }

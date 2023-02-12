@@ -18,6 +18,7 @@ public class RangedFlyingEnemy : Enemy
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
         enemyAnimator = GetComponent<Animator>();
+        health = enemyParams.health;
     }
     
     void Update()
@@ -28,10 +29,6 @@ public class RangedFlyingEnemy : Enemy
 
         GetComponent<AIPath>().maxSpeed = enemyParams.defaultSpeed;
 
-        if (enemyParams.health <= 0)
-        {
-            Destroy(gameObject);
-        }
     }
 
     public override void BeginAttack()
