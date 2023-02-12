@@ -7,11 +7,8 @@ using System.Threading;
 
 public abstract class Enemy : MonoBehaviour
 {
-    public float health = 5f;
     public Rigidbody rb;
     public bool knockbacked;
-    public float knockbackRecoverySpeed = 0.5f;
-    public float knockbackLerpTime;
 
     public Vector3 knockbackVelocity;
 
@@ -23,12 +20,7 @@ public abstract class Enemy : MonoBehaviour
     public bool isPlayerBehind;
     public bool isFacingPlayer;
 
-    public float distanceToAttack;
-
-    public float attackDamage;
-
-    public float defaultSpeed;
-
+    public EnemyParams enemyParams;
 
     public virtual void LoseHealth(float healthLost)
     {
@@ -36,7 +28,7 @@ public abstract class Enemy : MonoBehaviour
         {
             enemyAnimator.SetTrigger("isHit");
         }
-        health -= healthLost;
+        enemyParams.health -= healthLost;
     }
 
     public void Knockback(Transform knockbackSourcePoint, float knockbackStrength, float knockBackStrengthUp)
@@ -51,7 +43,7 @@ public abstract class Enemy : MonoBehaviour
 
     private IEnumerator StopKnockback()
     {
-        yield return new WaitForSeconds(knockbackRecoverySpeed);
+        yield return new WaitForSeconds(enemyParams.knockbackRecoverySpeed);
         knockbacked = false;
     }
 
@@ -71,5 +63,25 @@ public abstract class Enemy : MonoBehaviour
             Turn();
         }
     }
+
+    public void isPlayerInAttackZone()
+    {
+        if(Physics.CheckSphere(transform.position, enemyParams.attackRange, enemyParams.playerMask))
+        {
+            BeginAttack();
+            return;
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, enemyParams.attackRange);
+    }
+
+    public abstract void BeginAttack();
 
 }

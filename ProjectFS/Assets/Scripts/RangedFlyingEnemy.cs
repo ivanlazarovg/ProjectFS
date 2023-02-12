@@ -22,18 +22,24 @@ public class RangedFlyingEnemy : Enemy
     
     void Update()
     {
-        if (path.velocity == Vector3.zero && canAttack)
-        {
-            Attack();
-        }
+        isPlayerInAttackZone();
 
         CheckDirectionToFace();
 
-        GetComponent<AIPath>().maxSpeed = defaultSpeed;
+        GetComponent<AIPath>().maxSpeed = enemyParams.defaultSpeed;
 
-        if (health <= 0)
+        if (enemyParams.health <= 0)
         {
             Destroy(gameObject);
+        }
+    }
+
+    public override void BeginAttack()
+    {
+        destinationSetter.target = playerTransform;
+        if (path.velocity == Vector3.zero && canAttack)
+        {
+            Attack();
         }
     }
 

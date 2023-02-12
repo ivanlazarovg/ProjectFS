@@ -21,15 +21,20 @@ public class LaserEnemy : Enemy
     {
         if (!isInCycle)
         {
-            StartCoroutine(castHologramShot());
-            beam.beamcollider.enabled = false;
-            beam.meshRenderer.enabled = false;
+            isPlayerInAttackZone();
         }
 
-        if (health <= 0)
+        if (enemyParams.health <= 0)
         {
             Destroy(gameObject);
         }
+    }
+
+    public override void BeginAttack()
+    {
+        StartCoroutine(castHologramShot());
+        beam.beamcollider.enabled = false;
+        beam.meshRenderer.enabled = false;
     }
 
     public IEnumerator castHologramShot()

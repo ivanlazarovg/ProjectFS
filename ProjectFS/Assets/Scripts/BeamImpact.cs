@@ -17,7 +17,7 @@ public class BeamImpact : MonoBehaviour
     {
         if ((playerMask.value & (1 << other.transform.gameObject.layer)) > 0)
         {
-            playerCombat.TakeDamage(laserEnemy.attackDamage);
+            playerCombat.TakeDamage(laserEnemy.enemyParams.attackDamage);
         }
     }
 }

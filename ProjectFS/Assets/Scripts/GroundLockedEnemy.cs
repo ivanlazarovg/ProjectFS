@@ -6,15 +6,19 @@ using UnityEngine;
 public class GroundLockedEnemy : Enemy
 {
     public float chargeSpeed;
+    private AIDestinationSetter destinationSetter;
     void Start()
     {
+        destinationSetter = GetComponent<AIDestinationSetter>();
         rb = GetComponent<Rigidbody>();
         enemyAnimator = GetComponent<Animator>();
     }
 
     void Update()
     {
-        if (Vector3.Distance(transform.position, playerTransform.position) <= distanceToAttack)
+        isPlayerInAttackZone();
+
+        if (Vector3.Distance(transform.position, playerTransform.position) <= enemyParams.distanceToAttack)
         {
             enemyAnimator.SetTrigger("isAttacking");
             enemyAnimator.SetBool("isRunning", false);
@@ -22,7 +26,7 @@ public class GroundLockedEnemy : Enemy
         }
         else
         {
-            if (GetComponent<AIDestinationSetter>().target != null)
+            if (destinationSetter.target != null)
             {
                 enemyAnimator.SetBool("isRunning", true);
             }
@@ -34,9 +38,9 @@ public class GroundLockedEnemy : Enemy
 
         CheckDirectionToFace();
 
-        GetComponent<AIPath>().maxSpeed = defaultSpeed;
+        GetComponent<AIPath>().maxSpeed = enemyParams.defaultSpeed;
 
-        if (health <= 0)
+        if (enemyParams.health <= 0)
         {
             Destroy(gameObject);
         }
@@ -52,7 +56,7 @@ public class GroundLockedEnemy : Enemy
 
         if (knockbacked)
         {
-            knockbackVelocity.x = Mathf.Lerp(knockbackVelocity.x, 0f, Time.deltaTime * knockbackLerpTime);
+            knockbackVelocity.x = Mathf.Lerp(knockbackVelocity.x, 0f, Time.deltaTime * enemyParams.knockbackLerpTime);
 
             rb.velocity = new Vector3(knockbackVelocity.x, rb.velocity.y, rb.velocity.z);
         }
@@ -64,11 +68,16 @@ public class GroundLockedEnemy : Enemy
     }
     public void Attack()
     {
-        if (Vector3.Distance(transform.position, playerTransform.position) <= distanceToAttack)
+        if (Vector3.Distance(transform.position, playerTransform.position) <= enemyParams.distanceToAttack)
         {
             playerAnimator.SetTrigger("hurt");
-            playerAnimator.gameObject.GetComponent<PlayerCombat>().TakeDamage(attackDamage);
+            playerAnimator.gameObject.GetComponent<PlayerCombat>().TakeDamage(enemyParams.attackDamage);
         }
+    }
+
+    public override void BeginAttack()
+    {
+        destinationSetter.target = playerTransform;
     }
 
 }
