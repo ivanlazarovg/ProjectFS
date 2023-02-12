@@ -27,6 +27,7 @@ public class PlayerCombat : MonoBehaviour
     [Space(5)]
     public float chargedAttackRange = 1;
     public float chargedAttackDamage = 1;
+    public float chargedAttackStaminaDrain;
     public float chargedAttackKnockbackStrength = 5;
     public float chargedAttackKnockbackStrengthUp = 2;
 
@@ -54,6 +55,7 @@ public class PlayerCombat : MonoBehaviour
     bool isAiming = false;
     bool canAttack;
     public float distanceFromCam;
+    public float rangedAttackStaminaDrain;
 
     PlayerController playerController;
     public PlayerData playerData;
@@ -61,6 +63,8 @@ public class PlayerCombat : MonoBehaviour
 
     [Space(5)]
     public Slider healthBarSlider;
+    [Space(5)]
+    public Slider staminaBarSlider;
 
     private LightProjectile lastProjectile;
 
@@ -74,8 +78,15 @@ public class PlayerCombat : MonoBehaviour
     public Color activeMissileModeColor;
     public Color inactiveMissileModeColor;
 
+    [Space(5)]
+    private float startHealth;
+    private float staminaTimer;
+    public float staminaRegain;
+
     void Start()
     {
+        staminaTimer = 2;
+        startHealth = healthBarSlider.value;
         playerController = GetComponent<PlayerController>();
         playerInteraction = FindObjectOfType<PlayerInteraction>();
         missileModeOutlines = FindObjectsOfType<MissileModeUI>();
@@ -98,7 +109,10 @@ public class PlayerCombat : MonoBehaviour
             aimTransform.gameObject.GetComponentInChildren<MeshRenderer>().enabled = true;
             if (Input.GetMouseButtonDown(1))
             {
-                LaunchProjectile();
+                if (CheckStamina(rangedAttackStaminaDrain))
+                {
+                    LaunchProjectile();
+                }
 
                 isAiming = false;
             }
@@ -130,13 +144,16 @@ public class PlayerCombat : MonoBehaviour
                 }
                 else
                 {
-                    ChargedMeleeAttack();
+                    if (CheckStamina(chargedAttackStaminaDrain))
+                    {
+                        ChargedMeleeAttack();
+                    }         
                 }
                 meleeAttackTimer = 0;
                 attackTimer = 0;
             }
         }
-        else if(missileMode == 2) 
+        else if (missileMode == 2)
         {
             if (lastProjectile != null)
             {
@@ -148,6 +165,13 @@ public class PlayerCombat : MonoBehaviour
         }
 
         attackTimer += Time.deltaTime;
+
+        if(staminaTimer >= 2 && staminaBarSlider.value <= 100)
+        {
+            RegainStamina();
+        }
+
+        staminaTimer += Time.deltaTime;
     }
 
     public void FixedUpdate()
@@ -173,7 +197,7 @@ public class PlayerCombat : MonoBehaviour
 
         Collider[] enemiesHit = Physics.OverlapSphere(attackPoint.position, lightAttackRange, enemyLayers, QueryTriggerInteraction.Collide);
 
-        foreach(Collider collider in enemiesHit)
+        foreach (Collider collider in enemiesHit)
         {
             if (collider.gameObject.GetComponent<Enemy>() != null)
             {
@@ -186,7 +210,7 @@ public class PlayerCombat : MonoBehaviour
                     enemy.Knockback(transform, lightAttackKnockbackStrength, lightAttackKnockbackStrengthUp);
                 }
 
-            }   
+            }
         }
     }
 
@@ -254,11 +278,35 @@ public class PlayerCombat : MonoBehaviour
     public void TakeDamage(float attackDamage)
     {
         healthBarSlider.value -= attackDamage;
-        if(healthBarSlider.value <= 0)
+        if (healthBarSlider.value <= 0)
         {
             StartCoroutine(playerInteraction.DeathCondition());
         }
         characterAnimator.SetTrigger("hurt");
+    }
+
+    public void LoseStamina(float staminaAmount)
+    {
+        staminaBarSlider.value -= staminaAmount;
+    }
+
+    public bool CheckStamina(float staminaNeededForAction)
+    {
+        if (staminaNeededForAction > staminaBarSlider.value)
+        {
+            return false;
+        }
+        else
+        {
+            LoseStamina(staminaNeededForAction);
+            staminaTimer = 0;
+            return true;
+        }
+    }
+
+    void RegainStamina()
+    {
+        staminaBarSlider.value += staminaRegain;
     }
 
     public void Teleport()
@@ -279,6 +327,18 @@ public class PlayerCombat : MonoBehaviour
             {
                 item.SetColor(inactiveMissileModeColor);
             }
+        }
+    }
+
+    public void GainHealth(float healthAmount)
+    {
+        if(healthBarSlider.value + healthAmount <= startHealth)
+        {
+            healthBarSlider.value += healthAmount;
+        }
+        else
+        {
+            healthBarSlider.value = startHealth;
         }
     }
     
