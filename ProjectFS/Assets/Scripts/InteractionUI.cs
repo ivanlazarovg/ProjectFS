@@ -11,6 +11,5 @@ public class InteractionUI : MonoBehaviour
     {
         textMesh.text = interactionUIparams.text;
         transform.position = interactionUItransform.position;
-
     }
 }
