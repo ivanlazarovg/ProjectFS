@@ -34,11 +34,11 @@ MonoBehaviour:
   jumpHangTimeThreshold: 1
   jumpHangAccelerationMult: 1.09
   jumpHangMaxSpeedMult: 1.22
-  wallJumpForce: {x: 0, y: 0}
-  wallJumpRunLerp: 0
-  wallJumpTime: 0
-  doTurnOnWallJump: 0
+  wallJumpForce: {x: 20, y: 20.68}
+  wallJumpRunLerp: 0.72
+  wallJumpTime: 0.3
+  doTurnOnWallJump: 1
   slideSpeed: 0
   slideAccel: 0
-  coyoteTime: 0.129
+  coyoteTime: 0.118
   jumpInputBufferTime: 0.119

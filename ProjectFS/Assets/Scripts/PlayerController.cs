@@ -156,11 +156,27 @@ public class PlayerController : MonoBehaviour
             if (!IsJumping)
             {
                 //Ground Check
-                if (Physics.OverlapBox(_groundCheckPoint.position, _groundCheckSize, Quaternion.identity, _groundLayer).Length != 0 && !IsJumping) //checks if set box overlaps with ground
+                if (Physics.OverlapBox(_groundCheckPoint.position, _groundCheckSize/2, Quaternion.identity, _groundLayer).Length != 0 && !IsJumping) //checks if set box overlaps with ground
                 {
                     LastOnGroundTime = Data.coyoteTime; //if so sets the lastGrounded to coyoteTime
                 }
                 characterAnimator.SetBool("isJump", false);
+
+				if (((Physics.OverlapBox(_frontWallCheckPoint.position, _wallCheckSize/2, Quaternion.identity, _groundLayer).Length != 0 && IsFacingRight)
+					|| (Physics.OverlapBox(_backWallCheckPoint.position, _wallCheckSize/2, Quaternion.identity, _groundLayer).Length != 0 && !IsFacingRight)) && !IsWallJumping)
+				{
+					LastOnWallRightTime = 0.01f;
+				}
+
+				//Right Wall Check
+				if (((Physics.OverlapBox(_frontWallCheckPoint.position, _wallCheckSize/2, Quaternion.identity, _groundLayer).Length != 0 && !IsFacingRight)
+					|| (Physics.OverlapBox(_backWallCheckPoint.position, _wallCheckSize/2, Quaternion.identity, _groundLayer).Length != 0 && IsFacingRight)) && !IsWallJumping)
+				{
+					LastOnWallLeftTime = 0.01f;
+				}
+
+                //Two checks needed for both left and right walls since whenever the play turns the wall checkPoints swap sides
+                LastOnWallTime = Mathf.Max(LastOnWallLeftTime, LastOnWallRightTime);
             }
             else
             {
@@ -204,7 +220,7 @@ public class PlayerController : MonoBehaviour
                 Jump(Data.jumpForce);
             }
             //WALL JUMP
-            /*else if (CanWallJump() && LastPressedJumpTime > 0)
+            else if (CanWallJump() && LastPressedJumpTime > 0)
             {
                 IsWallJumping = true;
                 IsJumping = false;
@@ -214,7 +230,7 @@ public class PlayerController : MonoBehaviour
                 _lastWallJumpDir = (LastOnWallRightTime > 0) ? -1 : 1;
 
                 WallJump(_lastWallJumpDir);
-            }*/
+            }
         }
 
 
@@ -290,7 +306,7 @@ public class PlayerController : MonoBehaviour
 
 	public void OnJumpUpInput()
 	{
-		if (CanJumpCut())
+		if (CanJumpCut() || CanWallJumpCut())
 		{
 			_isJumpCut = true;
 		}
@@ -421,7 +437,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    /*private void WallJump(int dir)
+    private void WallJump(int dir)
 	{
 		//Ensures we can't call Wall Jump multiple times from one press
 		LastPressedJumpTime = 0;
@@ -434,16 +450,20 @@ public class PlayerController : MonoBehaviour
 		force.x *= dir; //apply force in opposite direction of wall
 
 		if (Mathf.Sign(rb.velocity.x) != Mathf.Sign(force.x))
+		{
 			force.x -= rb.velocity.x;
+		}
 
-		if (rb.velocity.y < 0) //checks whether player is falling, if so we subtract the velocity.y (counteracting force of gravity). This ensures the player always reaches our desired jump force or greater
+		if (rb.velocity.y < 0)
+		{ //checks whether player is falling, if so we subtract the velocity.y (counteracting force of gravity). This ensures the player always reaches our desired jump force or greater
 			force.y -= rb.velocity.y;
+		}
 
 		//Unlike in the run we want to use the Impulse mode.
 		//The default mode will apply are force instantly ignoring masss
-		rb.AddForce(force, ForceMode2D.Impulse);
+		rb.AddForce(force, ForceMode.Impulse);
 		#endregion
-	}*/
+	}
 
     #region OTHER MOVEMENT METHODS
     /*private void Slide()
@@ -459,24 +479,6 @@ public class PlayerController : MonoBehaviour
 		RB.AddForce(movement * Vector2.up);
 	}*/
 
-    /*private void MushroomJump()
-    {
-		mushroomJumpTimer += Time.deltaTime;
-		RaycastHit hit;
-		if(Physics.Raycast(_groundCheckPoint.position, -transform.up, out hit, 0.2f, _mushroomLayer) && !mushroomJumpTriggered)
-		{
-			print("jumped");
-			Jump(hit.collider.gameObject.GetComponent<Mushroom>().impulseForce);
-			mushroomJumpTriggered = true;
-			mushroomJumpTimer = 0;
-        }
-
-		if(mushroomJumpTimer > 0.15f)
-        {
-			mushroomJumpTriggered = false;
-        }
-		
-    }*/
     #endregion
 
 
@@ -507,7 +509,7 @@ public class PlayerController : MonoBehaviour
 
 	private bool CanDash()
 	{
-		return !IsJumping && !_isJumpCut && !_isJumpFalling && LastOnGroundTime > 0 && _dashBufferCounter > 0f && !_hasDashed;
+		return !IsJumping && !IsWallJumping && !_isJumpCut && !_isJumpFalling && LastOnGroundTime > 0 && _dashBufferCounter > 0f && !_hasDashed;
 	}
 
 	public void RayCastChecks()
@@ -529,7 +531,7 @@ public class PlayerController : MonoBehaviour
         return new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
     }
 
-    /*private bool CanWallJumpCut()
+    private bool CanWallJumpCut()
 	{
 		return IsWallJumping && rb.velocity.y > 0;
 	}
@@ -540,7 +542,7 @@ public class PlayerController : MonoBehaviour
 			return true;
 		else
 			return false;
-	}*/
+	}
     #endregion
 
 }
