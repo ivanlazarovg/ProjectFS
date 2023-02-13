@@ -38,10 +38,20 @@ public class PlayerController : MonoBehaviour
 	private int _lastWallJumpDir;
 
 	private Vector2 _moveInput;
-	public float LastPressedJumpTime { get; private set; }
+    private float _horizontalDirection;
+    private float _verticalDirection;
+    public float LastPressedJumpTime { get; private set; }
 
-	//Set all of these up in the inspector
-	[Header("Checks")]
+    [SerializeField] private float _dashSpeed = 15f;
+    [SerializeField] private float _dashLength = .3f;
+    [SerializeField] private float _dashBufferLength = .1f;
+    private float _dashBufferCounter;
+    private bool _isDashing;
+    private bool _hasDashed;
+    private bool _canDash => _dashBufferCounter > 0f && !_hasDashed;
+
+    //Set all of these up in the inspector
+    [Header("Checks")]
 	[SerializeField] private Transform _groundCheckPoint;
 	//Size of groundCheck depends on the size of your character generally you want them slightly small than width (for ground) and height (for the wall check)
 	[SerializeField] private Vector3 _groundCheckSize = new Vector3(0.49f, 0.03f, 0);
@@ -88,7 +98,23 @@ public class PlayerController : MonoBehaviour
 		_moveInput.x = Input.GetAxisRaw("Horizontal");
 		_moveInput.y = Input.GetAxisRaw("Vertical");
 
-		if (_moveInput.x != 0)
+        _horizontalDirection = _moveInput.x;
+        _verticalDirection = _moveInput.y;
+		if (Input.GetKeyDown(KeyCode.V))
+		{
+			_dashBufferCounter = _dashBufferLength;
+		}
+		else
+		{
+			_dashBufferCounter -= Time.deltaTime;
+		}
+
+		if (!_isDashing)
+		{
+			_hasDashed = false;
+		}
+
+        if (_moveInput.x != 0)
 		{
 			CheckDirectionToFace(_moveInput.x > 0);
 			if (!IsJumping)
@@ -232,8 +258,9 @@ public class PlayerController : MonoBehaviour
 		else
 			Run(1);
 
-		
-	}
+        if (_canDash) StartCoroutine(Dash(_horizontalDirection, _verticalDirection));
+
+    }
 
 	#region INPUT CALLBACKS
 	//Methods which whandle input detected in Update()
@@ -326,7 +353,35 @@ public class PlayerController : MonoBehaviour
 		#endregion
 	}
 
-	/*private void WallJump(int dir)
+    IEnumerator Dash(float x, float y)
+    {
+        float dashStartTime = Time.time;
+        _hasDashed = true;
+        _isDashing = true;
+        IsJumping = false;
+
+        rb.velocity = Vector2.zero;
+        rb.drag = 0f;
+
+        Vector2 dir;
+        if (x != 0f || y != 0f) dir = new Vector2(x, y);
+        else
+        {
+            if (IsFacingRight) dir = new Vector2(1f, 0f);
+            else dir = new Vector2(-1f, 0f);
+        }
+
+        while (Time.time < dashStartTime + _dashLength)
+        {
+            rb.velocity = dir.normalized * _dashSpeed;
+            yield return null;
+        }
+
+        _isDashing = false;
+    }
+
+
+    /*private void WallJump(int dir)
 	{
 		//Ensures we can't call Wall Jump multiple times from one press
 		LastPressedJumpTime = 0;
@@ -350,8 +405,8 @@ public class PlayerController : MonoBehaviour
 		#endregion
 	}*/
 
-	#region OTHER MOVEMENT METHODS
-	/*private void Slide()
+    #region OTHER MOVEMENT METHODS
+    /*private void Slide()
 	{
 		//Works the same as the Run but only in the y-axis
 		//THis seems to work fine, buit maybe you'll find a better way to implement a slide into this system
@@ -364,7 +419,7 @@ public class PlayerController : MonoBehaviour
 		RB.AddForce(movement * Vector2.up);
 	}*/
 
-	/*private void MushroomJump()
+    /*private void MushroomJump()
     {
 		mushroomJumpTimer += Time.deltaTime;
 		RaycastHit hit;
@@ -382,11 +437,11 @@ public class PlayerController : MonoBehaviour
         }
 		
     }*/
-	#endregion
+    #endregion
 
 
-	#region CHECK METHODS
-	public void CheckDirectionToFace(bool isMovingRight)
+    #region CHECK METHODS
+    public void CheckDirectionToFace(bool isMovingRight)
 	{
 		if (isMovingRight != IsFacingRight)
 			Turn();
@@ -422,7 +477,13 @@ public class PlayerController : MonoBehaviour
 
 	}
 
-	/*private bool CanWallJumpCut()
+    private Vector2 GetInput()
+    {
+        return new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+    }
+
+
+    /*private bool CanWallJumpCut()
 	{
 		return IsWallJumping && rb.velocity.y > 0;
 	}
@@ -434,6 +495,6 @@ public class PlayerController : MonoBehaviour
 		else
 			return false;
 	}*/
-	#endregion
+    #endregion
 
 }
