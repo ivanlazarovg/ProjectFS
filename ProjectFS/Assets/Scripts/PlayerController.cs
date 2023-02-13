@@ -109,111 +109,127 @@ public class PlayerController : MonoBehaviour
 			_dashBufferCounter -= Time.deltaTime;
 		}
 
-		if (!_isDashing)
+
+        if (CanDash())
+        {
+            StartCoroutine(Dash(_horizontalDirection));
+        }
+
+		if (_isDashing)
 		{
-			_hasDashed = false;
+            characterAnimator.SetBool("dash", true);
 		}
 
-        if (_moveInput.x != 0)
+        if (!_isDashing)
 		{
-			CheckDirectionToFace(_moveInput.x > 0);
-			if (!IsJumping)
-			{
-				characterAnimator.SetBool("isRun", true);
+			characterAnimator.SetBool("dash", false);
+            if (_moveInput.x != 0)
+            {
+                CheckDirectionToFace(_moveInput.x > 0);
+                if (!IsJumping)
+                {
+                    characterAnimator.SetBool("isRun", true);
+                }
+                else
+                {
+                    characterAnimator.SetBool("isRun", false);
+                }
             }
             else
             {
-				characterAnimator.SetBool("isRun", false);
-			}
+                characterAnimator.SetBool("isRun", false);
+            }
+
+
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.J))
+            {
+                OnJumpInput();
+            }
+
+            if (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.C) || Input.GetKeyUp(KeyCode.J))
+            {
+                OnJumpUpInput();
+            }
+            #endregion
+
+            #region COLLISION CHECKS
+            if (!IsJumping)
+            {
+                //Ground Check
+                if (Physics.OverlapBox(_groundCheckPoint.position, _groundCheckSize, Quaternion.identity, _groundLayer).Length != 0 && !IsJumping) //checks if set box overlaps with ground
+                {
+                    LastOnGroundTime = Data.coyoteTime; //if so sets the lastGrounded to coyoteTime
+                }
+                characterAnimator.SetBool("isJump", false);
+            }
+            else
+            {
+                characterAnimator.SetBool("isJump", true);
+            }
+            #endregion
+
+            #region JUMP CHECKS
+            if (IsJumping && rb.velocity.y < 0)
+            {
+                IsJumping = false;
+
+				if (!IsWallJumping)
+				{
+					_isJumpFalling = true;
+				}
+            }
+
+            if (IsWallJumping && Time.time - _wallJumpStartTime > Data.wallJumpTime)
+            {
+                IsWallJumping = false;
+            }
+
+            if (LastOnGroundTime > 0 && !IsJumping && !IsWallJumping)
+            {
+                _isJumpCut = false;
+
+				if (!IsJumping)
+				{
+					_isJumpFalling = false;
+				}
+            }
+
+            //Jump
+            if (CanJump() && LastPressedJumpTime > 0)
+            {
+                IsJumping = true;
+                IsWallJumping = false;
+                _isJumpCut = false;
+                _isJumpFalling = false;
+                Jump(Data.jumpForce);
+            }
+            //WALL JUMP
+            /*else if (CanWallJump() && LastPressedJumpTime > 0)
+            {
+                IsWallJumping = true;
+                IsJumping = false;
+                _isJumpCut = false;
+                _isJumpFalling = false;
+                _wallJumpStartTime = Time.time;
+                _lastWallJumpDir = (LastOnWallRightTime > 0) ? -1 : 1;
+
+                WallJump(_lastWallJumpDir);
+            }*/
         }
-        else
-        {
-			characterAnimator.SetBool("isRun", false);
-		}
-        
 
-		if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.J))
-		{
-			OnJumpInput();
-		}
 
-		if (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.C) || Input.GetKeyUp(KeyCode.J))
-		{
-			OnJumpUpInput();
-		}
-		#endregion
+        #endregion
 
-		#region COLLISION CHECKS
-		if (!IsJumping)
-		{
-			//Ground Check
-			if (Physics.OverlapBox(_groundCheckPoint.position, _groundCheckSize, Quaternion.identity, _groundLayer).Length != 0 && !IsJumping) //checks if set box overlaps with ground
-			{
-				LastOnGroundTime = Data.coyoteTime; //if so sets the lastGrounded to coyoteTime
-			}
-			characterAnimator.SetBool("isJump", false);
-        }
-        else
-        {
-			characterAnimator.SetBool("isJump", true);
-		}
-		#endregion
-
-		#region JUMP CHECKS
-		if (IsJumping && rb.velocity.y < 0)
-		{
-			IsJumping = false;
-
-			if (!IsWallJumping)
-				_isJumpFalling = true;
-		}
-
-		if (IsWallJumping && Time.time - _wallJumpStartTime > Data.wallJumpTime)
-		{
-			IsWallJumping = false;
-		}
-
-		if (LastOnGroundTime > 0 && !IsJumping && !IsWallJumping)
-		{
-			_isJumpCut = false;
-
-			if (!IsJumping)
-				_isJumpFalling = false;
-		}
-
-		//Jump
-		if (CanJump() && LastPressedJumpTime > 0)
-		{
-			IsJumping = true;
-			IsWallJumping = false;
-			_isJumpCut = false;
-			_isJumpFalling = false;
-			Jump(Data.jumpForce);
-		}
-		//WALL JUMP
-		/*else if (CanWallJump() && LastPressedJumpTime > 0)
-		{
-			IsWallJumping = true;
-			IsJumping = false;
-			_isJumpCut = false;
-			_isJumpFalling = false;
-			_wallJumpStartTime = Time.time;
-			_lastWallJumpDir = (LastOnWallRightTime > 0) ? -1 : 1;
-
-			WallJump(_lastWallJumpDir);
-		}*/
-		#endregion
-
-		#region SLIDE CHECKS
-		/*if (CanSlide() && ((LastOnWallLeftTime > 0 && _moveInput.x < 0) || (LastOnWallRightTime > 0 && _moveInput.x > 0)))
+        #region SLIDE CHECKS
+        /*if (CanSlide() && ((LastOnWallLeftTime > 0 && _moveInput.x < 0) || (LastOnWallRightTime > 0 && _moveInput.x > 0)))
 			IsSliding = true;
 		else
 			IsSliding = false;*/
-		#endregion
+        #endregion
 
-		#region GRAVITY
-		//Higher gravity if we've released the jump input or are falling
-		if (IsSliding)
+        #region GRAVITY
+        //Higher gravity if we've released the jump input or are falling
+        if (IsSliding)
 		{
 			SetGravity(0);
 		}
@@ -254,11 +270,14 @@ public class PlayerController : MonoBehaviour
 	private void FixedUpdate()
 	{
 		if (IsWallJumping)
+		{
 			Run(Data.wallJumpRunLerp);
+		}
 		else
+		{
 			Run(1);
+		}
 
-        if (_canDash) StartCoroutine(Dash(_horizontalDirection, _verticalDirection));
 
     }
 
@@ -272,7 +291,9 @@ public class PlayerController : MonoBehaviour
 	public void OnJumpUpInput()
 	{
 		if (CanJumpCut())
+		{
 			_isJumpCut = true;
+		}
 	}
 	#endregion
 
@@ -293,9 +314,13 @@ public class PlayerController : MonoBehaviour
 		//Gets an acceleration value based on if we are accelerating (includes turning) 
 		//or trying to decelerate (stop). As well as applying a multiplier if we're air borne.
 		if (LastOnGroundTime > 0)
+		{
 			accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? Data.runAccelAmount : Data.runDeccelAmount;
+		}
 		else
+		{
 			accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? Data.runAccelAmount * Data.accelInAir : Data.runDeccelAmount * Data.deccelInAir;
+		}
 
 		//Increase the acceleration and maxSpeed when at the apex of their jump, makes the jump feel a bit more bouncy, responsive and natural
 		if ((IsJumping || IsWallJumping || _isJumpFalling) && Mathf.Abs(rb.velocity.y) < Data.jumpHangTimeThreshold)
@@ -345,15 +370,17 @@ public class PlayerController : MonoBehaviour
 		//We increase the force applied if we are falling
 		//This means we'll always feel like we jump the same amount 
 		//(setting the player's Y velocity to 0 beforehand will likely work the same, but I find this more elegant :D)
-		
+
 		if (rb.velocity.y < 0)
+		{
 			force -= rb.velocity.y;
+		}
 
 		rb.AddForce(Vector3.up * force, ForceMode.Impulse);
 		#endregion
 	}
 
-    IEnumerator Dash(float x, float y)
+    IEnumerator Dash(float x)
     {
         float dashStartTime = Time.time;
         _hasDashed = true;
@@ -364,12 +391,21 @@ public class PlayerController : MonoBehaviour
         rb.drag = 0f;
 
         Vector2 dir;
-        if (x != 0f || y != 0f) dir = new Vector2(x, y);
-        else
-        {
-            if (IsFacingRight) dir = new Vector2(1f, 0f);
-            else dir = new Vector2(-1f, 0f);
-        }
+		if (x != 0f )
+		{
+			dir = new Vector2(x, 0f);
+		}
+		else
+		{
+			if (IsFacingRight)
+			{
+				dir = new Vector2(1f, 0f);
+			}
+			else
+			{
+				dir = new Vector2(-1f, 0f);
+			}
+		}
 
         while (Time.time < dashStartTime + _dashLength)
         {
@@ -378,6 +414,10 @@ public class PlayerController : MonoBehaviour
         }
 
         _isDashing = false;
+
+        yield return new WaitForSeconds(1f);
+		_hasDashed = false;
+
     }
 
 
@@ -444,12 +484,14 @@ public class PlayerController : MonoBehaviour
     public void CheckDirectionToFace(bool isMovingRight)
 	{
 		if (isMovingRight != IsFacingRight)
+		{
 			Turn();
+		}
 	}
 
 	private bool CanJump()
 	{
-		return LastOnGroundTime > 0 && !IsJumping;
+		return LastOnGroundTime > 0 && !IsJumping && !_isDashing;
 	}
 
 	private bool CanWallJump()
@@ -461,6 +503,11 @@ public class PlayerController : MonoBehaviour
 	private bool CanJumpCut()
 	{
 		return IsJumping && rb.velocity.y > 0;
+	}
+
+	private bool CanDash()
+	{
+		return !IsJumping && !_isJumpCut && !_isJumpFalling && LastOnGroundTime > 0 && _dashBufferCounter > 0f && !_hasDashed;
 	}
 
 	public void RayCastChecks()
@@ -481,7 +528,6 @@ public class PlayerController : MonoBehaviour
     {
         return new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
     }
-
 
     /*private bool CanWallJumpCut()
 	{
