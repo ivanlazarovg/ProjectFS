@@ -84,6 +84,7 @@ public class PlayerCombat : MonoBehaviour
     public float staminaRegain;
 
     private Dictionary<KeyCode, int> missileModeKeys;
+
     void Start()
     {
         staminaTimer = 2;
@@ -123,26 +124,17 @@ public class PlayerCombat : MonoBehaviour
 
         if (missileMode == 1)
         {
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButtonDown(0) && canAttack)
             {
                 meleeAttackTimer += Time.deltaTime;
+                characterAnimator.SetTrigger("attack");
+
+
             }
-            else if (Input.GetMouseButtonUp(0) && canAttack)
+            else if (Input.GetMouseButtonDown(1) && canAttack && !isAiming)
             {
-                if (meleeAttackTimer < meleeChargeThresholdTime)
-                {
-                    characterAnimator.SetTrigger("attack");
-                    StartCoroutine(LightMeleeAttack());
-                }
-                else
-                {
-                    if (CheckStamina(chargedAttackStaminaDrain))
-                    {
-                        ChargedMeleeAttack();
-                    }         
-                }
-                meleeAttackTimer = 0;
-                attackTimer = 0;
+                characterAnimator.SetTrigger("chargedAttack");
+
             }
         }
         else if (missileMode == 2)
@@ -160,7 +152,7 @@ public class PlayerCombat : MonoBehaviour
 
         attackTimer += Time.deltaTime;
 
-        if(staminaTimer >= 2 && staminaBarSlider.value <= 100)
+        if (staminaTimer >= 2 && staminaBarSlider.value <= 100)
         {
             RegainStamina();
         }
@@ -170,7 +162,7 @@ public class PlayerCombat : MonoBehaviour
 
     public void FixedUpdate()
     {
-        if (characterAnimator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+        if (characterAnimator.GetCurrentAnimatorStateInfo(0).IsName("Attack") || characterAnimator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
         {
             if (characterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
             {
@@ -185,10 +177,8 @@ public class PlayerCombat : MonoBehaviour
         }
     }
 
-    IEnumerator LightMeleeAttack()
+    void LightMeleeAttack()
     {
-        yield return new WaitForSeconds(attackAnimationDelay);
-
         Collider[] enemiesHit = Physics.OverlapSphere(attackPoint.position, lightAttackRange, enemyLayers, QueryTriggerInteraction.Collide);
 
         foreach (Collider collider in enemiesHit)
@@ -312,7 +302,7 @@ public class PlayerCombat : MonoBehaviour
     {
         foreach (var item in missileModeOutlines)
         {
-            if(missileMode == item.id)
+            if (missileMode == item.id)
             {
                 item.SetColor(activeMissileModeColor);
             }
@@ -325,7 +315,7 @@ public class PlayerCombat : MonoBehaviour
 
     public void GainHealth(float healthAmount)
     {
-        if(healthBarSlider.value + healthAmount <= startHealth)
+        if (healthBarSlider.value + healthAmount <= startHealth)
         {
             healthBarSlider.value += healthAmount;
         }
