@@ -5,13 +5,14 @@ using UnityEngine;
 
 public class NarrativeObjectEngage : MonoBehaviour
 {
-    public SpeechObject[] spiritSpeeches;
     public NarrativeObjectInteractable narrativeObject;
     private Transform playerTransform;
     private PlayerInteraction playerInteraction;
     public float turnSpeed;
     [SerializeField]
     private Camera cam;
+    [SerializeField]
+    private float speechDelay;
 
     [SerializeField]
     private LayerMask textMask;
@@ -20,10 +21,23 @@ public class NarrativeObjectEngage : MonoBehaviour
 
     private bool hitOnce = false;
     private bool hasTextToRead;
+
+    private Speaker spiritSpeaker;
+
+    public SpeechObject spiritSpeech;
+
+    private SpeechManager speechManager;
+
+    private SpeechUI speechUI;
+
+    private bool hasRead;
     
 
     private void Start()
     {
+        speechUI = FindObjectOfType<SpeechUI>();
+        speechManager = FindObjectOfType<SpeechManager>();
+        spiritSpeaker = GameObject.Find("Leeval").GetComponent<Speaker>();
         readableText = GameObject.Find("TextToRead").GetComponent<TextMeshProUGUI>();
         playerTransform = GameObject.Find("Player").transform;
         playerInteraction = FindObjectOfType<PlayerInteraction>();
@@ -46,12 +60,17 @@ public class NarrativeObjectEngage : MonoBehaviour
     {
         Turn();
 
-        if (hasTextToRead)
+        if(spiritSpeech != null && !speechManager.isTalking && !hasRead)
+        {
+            speechManager.Run(spiritSpeech, speechUI.textUI, speechUI.typeSpeed, spiritSpeaker, speechDelay);
+            hasRead = true;
+        }
+
+        if (hasTextToRead && !speechManager.isTalking)
         {
             RaycastHit hit;
             if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 10f, textMask))
             {
-                print("jur");
                 if (!hitOnce)
                 {
                     readableText.text = "press 'E' to read";

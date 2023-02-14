@@ -12,7 +12,6 @@ public class SpeechManager : MonoBehaviour
     //public Dictionary<char, float> intonationCharsDictionary = new Dictionary<char, float>();
     public CharWaitTimePair[] charWaitTimePair;
     Speaker speaker;
-    GameObject _speakerObject;
     TMP_Text _textUI;
     public bool isTalking;
     SpeechUI speechUI;
@@ -31,8 +30,9 @@ public class SpeechManager : MonoBehaviour
         speechUI = GetComponent<SpeechUI>();
     }
 
-    public void Run(SpeechObject speech, TMP_Text textUI, float typeSpeed, GameObject speakerObject)
+    public void Run(SpeechObject speech, TMP_Text textUI, float typeSpeed, Speaker speakerObject, float speechDelay)
     {
+        isTalking = true;
         speaker = speakerObject.GetComponent<Speaker>();
         speechUI.speakerProfile = speaker.speakerProfile;
         speech.hasResponseAttached = speech.responses.Length != 0 ? true : false;
@@ -41,25 +41,24 @@ public class SpeechManager : MonoBehaviour
         responseHandler.pickedResponse = null;
         responseHandler.responses = null;
 
-        StartCoroutine(PresentText(speech, textUI, typeSpeed, speakerObject));
+        StartCoroutine(PresentText(speech, textUI, typeSpeed, speakerObject, speechDelay));
 
     }
 
-    public IEnumerator PresentText(SpeechObject speech, TMP_Text textUI, float typeSpeedOrigin, GameObject speakerObject)
+    public IEnumerator PresentText(SpeechObject speech, TMP_Text textUI, float typeSpeedOrigin, Speaker speakerObject, float speechDelay)
     {
+        yield return new WaitForSeconds(speechDelay);
         string text = speech.speech.ToString();
         speechUI.textUI.gameObject.transform.parent.transform.parent.gameObject.transform.parent.gameObject.SetActive(true);
         textUI.rectTransform.position = speechRect.position;
         _textUI = textUI;
-        _speakerObject = speakerObject;
 
         speaker.canTalkTo = false;
         float time = 0;
         int charIndex = 0;
         float typeSpeed = typeSpeedOrigin;
         string tempText = string.Empty;
-
-        isTalking = true;
+        
 
         while (charIndex < text.Length)
         {    
@@ -97,22 +96,22 @@ public class SpeechManager : MonoBehaviour
             yield return new WaitUntil(() => responseHandler.isResponding == false);
             if (responseHandler.pickedResponse.speechObject == null)
             {
-                ExitSpeech(speakerObject, speaker, _textUI, speech);
+                ExitSpeech(speaker, _textUI, speech);
             }
             else
             {
-                Run(responseHandler.pickedResponse.speechObject, speechUI.textUI, speechUI.typeSpeed, speakerObject);
+                Run(responseHandler.pickedResponse.speechObject, speechUI.textUI, speechUI.typeSpeed, speakerObject, 0f);
             }
         }
         else if(speech.hasSpeechAttached)
         {
             yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
-            Run(speech.nextSpeech, speechUI.textUI, speechUI.typeSpeed, speakerObject);
+            Run(speech.nextSpeech, speechUI.textUI, speechUI.typeSpeed, speakerObject, 0f);
         }
         else
         {
             yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
-            ExitSpeech(_speakerObject, speaker, _textUI, speech);
+            ExitSpeech(speaker, _textUI, speech);
 
         }
 
@@ -148,7 +147,7 @@ public class SpeechManager : MonoBehaviour
         return text;
     }
 
-    private void ExitSpeech(GameObject speakerObject, Speaker speaker, TMP_Text textUI, SpeechObject speech)
+    private void ExitSpeech(Speaker speaker, TMP_Text textUI, SpeechObject speech)
     {
         speaker.canTalkTo = true;
         textUI.text = "";

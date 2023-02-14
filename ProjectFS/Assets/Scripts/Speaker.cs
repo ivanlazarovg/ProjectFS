@@ -17,7 +17,7 @@ public class Speaker : MonoBehaviour
 
         if (canTalkTo)
         {
-            speechManager.Run(speeches[0], speechUI.textUI, speechUI.typeSpeed, this.gameObject);
+            speechManager.Run(speeches[0], speechUI.textUI, speechUI.typeSpeed, this, 0f);
 
         }
     }
