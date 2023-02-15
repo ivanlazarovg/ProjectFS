@@ -16,9 +16,9 @@ MonoBehaviour:
   knockbackRecoverySpeed: 0.5
   knockbackLerpTime: 0
   distanceToAttack: 0
-  attackDamage: 5
-  defaultSpeed: 12
-  attackRange: 13
+  attackDamage: 4
+  defaultSpeed: 9.57
+  attackRange: 12.9
   playerMask:
     serializedVersion: 2
     m_Bits: 1024
