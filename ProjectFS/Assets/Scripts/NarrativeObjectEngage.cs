@@ -7,7 +7,6 @@ public class NarrativeObjectEngage : MonoBehaviour
 {
     public NarrativeObjectInteractable narrativeObject;
     private Transform playerTransform;
-    private PlayerInteraction playerInteraction;
     public float turnSpeed;
     [SerializeField]
     private Camera cam;
@@ -40,7 +39,6 @@ public class NarrativeObjectEngage : MonoBehaviour
         spiritSpeaker = GameObject.Find("Leeval").GetComponent<Speaker>();
         readableText = GameObject.Find("TextToRead").GetComponent<TextMeshProUGUI>();
         playerTransform = GameObject.Find("Player").transform;
-        playerInteraction = FindObjectOfType<PlayerInteraction>();
         if(GetComponentInChildren<TextObject>() != null )
         {
             hasTextToRead = true;
@@ -94,7 +92,7 @@ public class NarrativeObjectEngage : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             readableText.text = string.Empty;
-            playerInteraction.DisengageInspect(playerTransform, this.gameObject);
+            PlayerInteraction.instance.DisengageInspect(playerTransform, this.gameObject);
         }
     }
 

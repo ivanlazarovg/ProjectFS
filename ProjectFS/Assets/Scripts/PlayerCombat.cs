@@ -70,8 +70,6 @@ public class PlayerCombat : MonoBehaviour
 
     public int missileMode = 1;
 
-    private PlayerInteraction playerInteraction;
-
     [SerializeField]
     private MissileModeUI[] missileModeOutlines;
 
@@ -90,7 +88,6 @@ public class PlayerCombat : MonoBehaviour
         staminaTimer = 2;
         startHealth = healthBarSlider.value;
         playerController = GetComponent<PlayerController>();
-        playerInteraction = FindObjectOfType<PlayerInteraction>();
         missileModeOutlines = FindObjectsOfType<MissileModeUI>();
         SetUpDictionaryKeys();
         missileMode = 1;
@@ -263,7 +260,7 @@ public class PlayerCombat : MonoBehaviour
         healthBarSlider.value -= attackDamage;
         if (healthBarSlider.value <= 0)
         {
-            StartCoroutine(playerInteraction.DeathCondition());
+            StartCoroutine(PlayerInteraction.instance.DeathCondition());
         }
         characterAnimator.SetTrigger("hurt");
     }

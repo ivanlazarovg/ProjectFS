@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDataPersistence
 {
 	//Scriptable object which holds all the player's movement parameters. If you don't want to use it
 	//just paste in all the parameters, though you will need to manuly change all references in this script
@@ -70,6 +70,16 @@ public class PlayerController : MonoBehaviour
 	float mushroomJumpTimer = 0;
 	public Transform rotatePoint;
 	#endregion
+
+	public void LoadData(GameData data)
+    {
+		this.transform.position = data.playerPosition;
+    }
+
+	public void SaveData(GameData data)
+    {
+		data.playerPosition = this.transform.position;
+    }
 
 	private void Awake()
 	{
