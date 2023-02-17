@@ -211,19 +211,19 @@ public class DayNightCycle : MonoBehaviour
 
             SunIntensity();
             ColourAdjustment();
-            AmbientAdjustment();
+            //AmbientAdjustment();
             TopSkySet();
             MiddleSkySet();
             HorizonSet();
             SunColorSet();
-            SunGlowIntensitySet();
-            StarLayersInterpolation();
-            MoonIntensitySet();
-            RiverEdgeSet();
-            FogSet();
+            //SunGlowIntensitySet();
+            //StarLayersInterpolation();
+            //MoonIntensitySet();
+            //RiverEdgeSet();
+            //FogSet();
             //CloudColorSet();
-            NormalScaleSet();
-            WaterColorSet();
+            //NormalScaleSet();
+            //WaterColorSet();
         }
         dailySunRotation();
         
@@ -336,10 +336,10 @@ public class DayNightCycle : MonoBehaviour
     {
         skyboxmat.SetColor("_HorizonColor", horizonGradient.Evaluate(timeOfDay));
         skyboxmat.SetColor("_HorizonLineColor", horizonColorGradient.Evaluate(timeOfDay));
-        skyboxmat.SetFloat("_HorizonSharpness", horizonSharpnessCurve.Evaluate(timeOfDay));
+        /*skyboxmat.SetFloat("_HorizonSharpness", horizonSharpnessCurve.Evaluate(timeOfDay));
         skyboxmat.SetFloat("_HorizonGlowIntensity", horizonGlowCurve.Evaluate(timeOfDay));
         skyboxmat.SetFloat("_HorizonSunGlowSpreadMax", horizonMaxCurve.Evaluate(timeOfDay));
-        skyboxmat.SetFloat("_SkyGradientPower", skyPowerCurve.Evaluate(timeOfDay));
+        skyboxmat.SetFloat("_SkyGradientPower", skyPowerCurve.Evaluate(timeOfDay));*/
     }
 
     private void SunColorSet()

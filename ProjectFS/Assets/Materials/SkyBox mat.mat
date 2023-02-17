@@ -114,12 +114,12 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _HorizonExponent: 9.73
-    - _HorizonGlowIntensity: 0
+    - _HorizonExponent: 12.55
+    - _HorizonGlowIntensity: 5.07
     - _HorizonIntensity: 1.11
     - _HorizonMaxRemap: 1.03
-    - _HorizonMinRemap: 0
-    - _HorizonSharpness: 0
+    - _HorizonMinRemap: -3.65
+    - _HorizonSharpness: 15.31
     - _HorizonSunGlowSpreadMax: 0
     - _HorizonSunGlowSpreadMin: 0
     - _Metallic: 0
@@ -133,9 +133,9 @@ Material:
     - _OffsetHorizon: -0.125
     - _Parallax: 0.02
     - _SecNoiseScale: 0.46
-    - _SkyGradientPower: 0
+    - _SkyGradientPower: 4.32
     - _SkyGradientPower1: 1.78
-    - _SkyGradientScale: 0.39
+    - _SkyGradientScale: 1.96
     - _SkyGradientScale1: 0.75
     - _SkyIntensity: 1.03
     - _SkyPower: 7.52
@@ -183,13 +183,13 @@ Material:
     - _HorizonColor: {r: 1, g: 1, b: 1, a: 1}
     - _HorizonColorDay: {r: 0.29472232, g: 0.3309452, b: 0.3490566, a: 1}
     - _HorizonColorNight: {r: 0.09433961, g: 0.09433961, b: 0.09433961, a: 1}
-    - _HorizonLineColor: {r: 0.7815977, g: 0.7796346, b: 0.94893837, a: 1}
+    - _HorizonLineColor: {r: 0.7878283, g: 0.78334045, b: 0.9552764, a: 1}
     - _MoonColor: {r: 0.75032425, g: 0.74056596, b: 1, a: 0}
     - _NightBottomColor: {r: 0, g: 0, b: 0.19999996, a: 1}
     - _NightTopColor: {r: 0, g: 0, b: 0, a: 1}
-    - _SkyColor2: {r: 0.6371312, g: 0.730808, b: 0.9965382, a: 1}
+    - _SkyColor2: {r: 0.63529414, g: 0.8, b: 0.99607843, a: 1}
     - _SkyColor3: {r: 0.042052325, g: 0.04910601, b: 0.14150941, a: 0}
-    - _SkyColor4: {r: 0.24089557, g: 0.39910743, b: 0.86332726, a: 1}
+    - _SkyColor4: {r: 0.24972688, g: 0.626246, b: 0.85433614, a: 1}
     - _SkyColorMiddleNight: {r: 0.010414989, g: 0.008410464, b: 0.066037714, a: 0}
     - _SkyColorTop: {r: 0.3584906, g: 0.13020648, b: 0.13020648, a: 0}
     - _SkyColorTopDay: {r: 0.27305093, g: 0.56373686, b: 0.9811321, a: 0}
@@ -198,7 +198,7 @@ Material:
     - _StarLayer1Color: {r: 0.9009434, g: 0.9284591, b: 1, a: 0}
     - _StarLayer2Color: {r: 1, g: 0.9103774, b: 0.91303724, a: 0}
     - _StarLayer3Color: {r: 0.9938089, g: 0.9009434, b: 1, a: 0}
-    - _StarSize: {r: 5.53, g: 6.6, b: 14, a: 0}
+    - _StarSize: {r: 0, g: 0, b: 0, a: 0}
     - _SunColor: {r: 1, g: 1, b: 1, a: 1}
     - _SunSet: {r: 1, g: 1, b: 1, a: 1}
     - _lerpColor: {r: 1, g: 1, b: 1, a: 0}
