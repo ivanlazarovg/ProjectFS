@@ -1,0 +1,211 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: TreeMat1
+  m_Shader: {fileID: 4800000, guid: 56fac52257e278b4ba7ba9589bfd16ab, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _AXIS_X
+  - _WIGGLE_ON
+  - _WIND_ON
+  m_InvalidKeywords:
+  - EFFECT_HUE_VARIATION
+  - GEOM_TYPE_LEAF
+  - _BEND_ON
+  - _CULLBACKFACES_ON
+  - _CULLFRONTFACES_ON
+  - _FLOAT0_ON
+  - _FLOAT1_ON
+  - _SHOWBACKFACES_ON
+  - _SHOWFRONTFACES_ON
+  m_LightmapFlags: 6
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: :m_CustomRenderQueue _Ambient _DissolveScale
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - NoiseTextureFloat:
+        m_Texture: {fileID: 2800000, guid: e5055e0d246bd1047bdb28057a93753c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - NoiseTextureFloat1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _GlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: d2f321fff7f05aa49ad106541e997dd3, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ShadowOffset:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SpecGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSample0:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TranslucencyMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - LeavesAlphaCutoff: 0.5
+    - WindSpeedFloat: 0.689
+    - WindSpeedFloat1: 0.204
+    - WindTurbulenceFloat: 0.076
+    - WindTurbulenceFloat1: 0.189
+    - _AlphaCutoff: 0.5
+    - _Atenuation: -0.0133
+    - _Axis: 0
+    - _Bend: 1
+    - _BendStrenght: 0.5
+    - _BumpScale: 1
+    - _Cull: 0
+    - _CullBackFaces: 1
+    - _CullFrontFaces: 1
+    - _Cutoff: 0.88
+    - _DepthFactor: 0
+    - _DetailNormalMapScale: 1
+    - _DissolveNoiseStrength: 1.72
+    - _DissolveScale: 0
+    - _DistortNormal: 34.07
+    - _DstBlend: 0
+    - _EdgeWidth: 0.04
+    - _Float0: 2.61
+    - _Float1: 1
+    - _GlossMapScale: 1
+    - _Glossiness: 0
+    - _GlossyReflections: 1
+    - _Indirect: 0.19
+    - _Keyword0: 0
+    - _LightAtten: 0.013
+    - _LightAttenSpecular: 0.00002
+    - _Metallic: 0
+    - _Mode: 0
+    - _NoiseSnowOpacity: 0.68
+    - _NormalFactor: 0.46
+    - _NormalFactor1: 0
+    - _OcclusionStrength: 1
+    - _Parallax: 0.02
+    - _ShadowStrength: 0.5
+    - _Shininess: 0.01
+    - _ShowBackFaces: 1
+    - _ShowFrontFaces: 1
+    - _SmoothnessTextureChannel: 0
+    - _Snow: 0
+    - _SnowAmount: 0.176
+    - _SnowAmount1: 2
+    - _SnowSize: 1
+    - _SnowSizeFloat: 2.5
+    - _Snowsize: 1.59
+    - _SpecularHighlights: 1
+    - _SpecularPower: 2.47
+    - _SpecularScale: 10.66
+    - _SquashAmount: 1
+    - _SrcBlend: 1
+    - _Strenght: 0.5
+    - _TranslucencyPower: 6.62
+    - _TranslucencyPower1: 0
+    - _TranslucencyScale: 72.75
+    - _TranslucencyScale1: 0
+    - _TranslucencyViewDependency: 0
+    - _UVSec: 0
+    - _Wiggle: 1
+    - _WiggleStrenght: 1
+    - _Wind: 1
+    - _WindQuality: 0
+    - _WindStrenght: 0.545
+    - _WindStrenght1: 0.036
+    - _ZWrite: 1
+    - __dirty: 1
+    - _dissolvecutoffpoint: -0.56
+    m_Colors:
+    - _Ambient: {r: 0.30790016, g: 0.6039216, b: 0.13333331, a: 0}
+    - _AmbientEmissive: {r: 0.006619283, g: 0.016425522, b: 0.005810916, a: 0}
+    - _Color: {r: 0, g: 0, b: 0, a: 1}
+    - _Color0: {r: 0.16549937, g: 0.5, b: 0.1014151, a: 0}
+    - _EdgeColor: {r: 0.20784314, g: 0.28235295, b: 0.09019608, a: 1}
+    - _EdgeDissolveColor: {r: 3.184314, g: 0, b: 0, a: 0}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
+    - _HueVariation: {r: 1, g: 0.8997179, b: 0.740566, a: 1}
+    - _NoiseTile: {r: 1.1, g: 0.33, b: 0.45, a: 0.42}
+    - _Norms: {r: 1, g: 1, b: 1, a: 0}
+    - _Pivot: {r: 1, g: 1, b: 0, a: 0}
+    - _RandomnessColor: {r: 0.19279549, g: 0.3301887, b: 0.18222678, a: 1}
+    - _ShakePivot: {r: 0.75, g: 0, b: 0, a: 0}
+    - _Snow: {r: 1, g: 1, b: 1, a: 0}
+    - _SnowColor: {r: 0.5711056, g: 0.6226415, b: 0.15566038, a: 1}
+    - _SnowCoverage: {r: 0, g: 0.35, b: 0, a: 0}
+    - _SnowDir: {r: 0, g: 2, b: 0, a: 0}
+    - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+    - _SpecularColor: {r: 0, g: 0, b: 0, a: 1}
+    - _TranslucencyColor: {r: 0.72321427, g: 1, b: 0, a: 1}
+    - _Translucencycolor: {r: 0.8047153, g: 1, b: 0.4481132, a: 0}
+    - _Translucencycolor1: {r: 0, g: 0, b: 0, a: 0}
+    - _TreeInstanceColor: {r: 1, g: 1, b: 1, a: 1}
+    - _TreeInstanceScale: {r: 1, g: 1, b: 1, a: 1}
+    - _Vector0: {r: 0, g: 0, b: -1, a: 0}
+    - _Vector1: {r: 0, g: 0, b: 1, a: 0}
+    - _Vector2: {r: 1.3, g: 1, b: 1, a: 7.7}
+    - _WindDirection: {r: 1.19, g: -0.06, b: 0.04, a: 0}
+  m_BuildTextureStacks: []

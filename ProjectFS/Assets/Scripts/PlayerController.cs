@@ -3,21 +3,12 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour, IDataPersistence
 {
-	//Scriptable object which holds all the player's movement parameters. If you don't want to use it
-	//just paste in all the parameters, though you will need to manuly change all references in this script
-
-	//HOW TO: to add the scriptable object, right-click in the project window -> create -> Player Data
-	//Next, drag it into the slot in playerMovement on your player
 
 	public PlayerData Data;
 
 	#region Variables
-	//Components
 	public Rigidbody rb { get; private set; }
 
-	//Variables control the various actions the player can perform at any time.
-	//These are fields which can are public allowing for other sctipts to read them
-	//but can only be privately written to.
 	public bool IsFacingRight { get; private set; }
 	public bool IsJumping { get; private set; }
 	public bool IsWallJumping { get; private set; }
@@ -78,7 +69,7 @@ public class PlayerController : MonoBehaviour, IDataPersistence
 
 	public void SaveData(GameData data)
     {
-		data.playerPosition = this.transform.position;
+		data.playerPosition = PlayerInteraction.instance.lastRespawnPoint.transform.position;
     }
 
 	private void Awake()
