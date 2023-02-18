@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEditor;
 using UnityEngine.UI;
 using TMPro;
 using static UnityEditor.Experimental.GraphView.GraphView;
@@ -88,7 +89,7 @@ public class PlayerCombat : MonoBehaviour
         staminaTimer = 2;
         startHealth = healthBarSlider.value;
         playerController = GetComponent<PlayerController>();
-        missileModeOutlines = FindObjectsOfType<MissileModeUI>();
+        missileModeOutlines = Resources.FindObjectsOfTypeAll(typeof(MissileModeUI)) as MissileModeUI[];
         SetUpDictionaryKeys();
         missileMode = 1;
         SetMissileModeUI();
@@ -295,6 +296,18 @@ public class PlayerCombat : MonoBehaviour
         Destroy(lastProjectile.gameObject);
     }
 
+    public void GainHealth(float healthAmount)
+    {
+        if (healthBarSlider.value + healthAmount <= startHealth)
+        {
+            healthBarSlider.value += healthAmount;
+        }
+        else
+        {
+            healthBarSlider.value = startHealth;
+        }
+    }
+
     void SetMissileModeUI()
     {
         foreach (var item in missileModeOutlines)
@@ -310,24 +323,11 @@ public class PlayerCombat : MonoBehaviour
         }
     }
 
-    public void GainHealth(float healthAmount)
-    {
-        if (healthBarSlider.value + healthAmount <= startHealth)
-        {
-            healthBarSlider.value += healthAmount;
-        }
-        else
-        {
-            healthBarSlider.value = startHealth;
-        }
-    }
-
     private void SetUpDictionaryKeys()
     {
         missileModeKeys = new Dictionary<KeyCode, int>
         {
-            { KeyCode.Alpha1, 1 },
-            { KeyCode.Alpha2, 2 }
+            { KeyCode.Alpha1, 1 }
         };
     }
 
@@ -335,11 +335,20 @@ public class PlayerCombat : MonoBehaviour
     {
         foreach (var kvp in missileModeKeys)
         {
+            missileModeOutlines[kvp.Value - 1].gameObject.SetActive(true);
             if (Input.GetKeyDown(kvp.Key))
             {
                 missileMode = kvp.Value;
                 SetMissileModeUI();
             }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "teleportUnlock")
+        {
+            missileModeKeys.Add(KeyCode.Alpha2, 2);
         }
     }
 }
