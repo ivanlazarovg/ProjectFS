@@ -183,13 +183,13 @@ Material:
     - _HorizonColor: {r: 1, g: 1, b: 1, a: 1}
     - _HorizonColorDay: {r: 0.29472232, g: 0.3309452, b: 0.3490566, a: 1}
     - _HorizonColorNight: {r: 0.09433961, g: 0.09433961, b: 0.09433961, a: 1}
-    - _HorizonLineColor: {r: 0.7878283, g: 0.78334045, b: 0.9552764, a: 1}
+    - _HorizonLineColor: {r: 0.7888462, g: 0.7839459, b: 0.9563119, a: 1}
     - _MoonColor: {r: 0.75032425, g: 0.74056596, b: 1, a: 0}
     - _NightBottomColor: {r: 0, g: 0, b: 0.19999996, a: 1}
     - _NightTopColor: {r: 0, g: 0, b: 0, a: 1}
     - _SkyColor2: {r: 0.63529414, g: 0.8, b: 0.99607843, a: 1}
     - _SkyColor3: {r: 0.042052325, g: 0.04910601, b: 0.14150941, a: 0}
-    - _SkyColor4: {r: 0.24972688, g: 0.626246, b: 0.85433614, a: 1}
+    - _SkyColor4: {r: 0.24872312, g: 0.627859, b: 0.85513914, a: 1}
     - _SkyColorMiddleNight: {r: 0.010414989, g: 0.008410464, b: 0.066037714, a: 0}
     - _SkyColorTop: {r: 0.3584906, g: 0.13020648, b: 0.13020648, a: 0}
     - _SkyColorTopDay: {r: 0.27305093, g: 0.56373686, b: 0.9811321, a: 0}
