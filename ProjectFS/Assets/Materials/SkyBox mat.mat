@@ -180,16 +180,16 @@ Material:
     - _ColorNightTop: {r: 0.01713243, g: 0.046693504, b: 0.10377359, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _HorizonCOlor: {r: 1, g: 0.0581955, b: 0, a: 0}
-    - _HorizonColor: {r: 1, g: 0.30215096, b: 0.259108, a: 1}
+    - _HorizonColor: {r: 1, g: 0.91309035, b: 0.9077298, a: 1}
     - _HorizonColorDay: {r: 0.29472232, g: 0.3309452, b: 0.3490566, a: 1}
     - _HorizonColorNight: {r: 0.09433961, g: 0.09433961, b: 0.09433961, a: 1}
-    - _HorizonLineColor: {r: 0.98704576, g: 0.79689044, b: 0.81501746, a: 1}
+    - _HorizonLineColor: {r: 0.90459776, g: 0.79511243, b: 0.8855791, a: 1}
     - _MoonColor: {r: 0.75032425, g: 0.74056596, b: 1, a: 0}
     - _NightBottomColor: {r: 0, g: 0, b: 0.19999996, a: 1}
     - _NightTopColor: {r: 0, g: 0, b: 0, a: 1}
-    - _SkyColor2: {r: 0.769051, g: 0.5629926, b: 0.4734438, a: 1}
+    - _SkyColor2: {r: 0.6550519, g: 0.7673478, b: 0.9168551, a: 1}
     - _SkyColor3: {r: 0.042052325, g: 0.04910601, b: 0.14150941, a: 0}
-    - _SkyColor4: {r: 0.2818479, g: 0.5801318, b: 0.8203781, a: 1}
+    - _SkyColor4: {r: 0.27279273, g: 0.62293744, b: 0.86034673, a: 1}
     - _SkyColorMiddleNight: {r: 0.010414989, g: 0.008410464, b: 0.066037714, a: 0}
     - _SkyColorTop: {r: 0.3584906, g: 0.13020648, b: 0.13020648, a: 0}
     - _SkyColorTopDay: {r: 0.27305093, g: 0.56373686, b: 0.9811321, a: 0}
