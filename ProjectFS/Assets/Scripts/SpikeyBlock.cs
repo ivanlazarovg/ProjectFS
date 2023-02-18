@@ -14,7 +14,7 @@ public class SpikeyBlock : MonoBehaviour
         if((playerMask.value & (1 << collision.collider.transform.gameObject.layer)) > 0)
         {
             Knockback(collision.collider.gameObject.GetComponent<Rigidbody>());
-            collision.collider.gameObject.GetComponent<PlayerCombat>().TakeDamage(damage);
+            PlayerCombat.instance.TakeDamage(damage);
         }
 
         if ((projectileMask.value & (1 << collision.collider.transform.gameObject.layer)) > 0)

@@ -8,9 +8,8 @@ public class HealthPickUp : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.GetComponent<PlayerCombat>())
-        {
-            PlayerCombat playerCombat = other.gameObject.GetComponent<PlayerCombat>();
-            playerCombat.GainHealth(healthamount);
+        { 
+            PlayerCombat.instance.GainHealth(healthamount);
             Destroy(gameObject);
         }
     }

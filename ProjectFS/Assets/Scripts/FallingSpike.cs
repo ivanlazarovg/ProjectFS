@@ -8,7 +8,6 @@ public class FallingSpike : MonoBehaviour
     private float timer = 0;
     private float colorLerptimer = 0;
     private bool isFalling = false;
-    private PlayerCombat playerCombat;
 
     public SpikeScriptableObject spikeParams;
     private MaterialPropertyBlock propertyBlock;
@@ -18,7 +17,6 @@ public class FallingSpike : MonoBehaviour
     {
         meshRenderer = GetComponent<MeshRenderer>();
         propertyBlock = new MaterialPropertyBlock();
-        playerCombat = FindObjectOfType<PlayerCombat>();
         SetPropertyBlockColor(spikeParams.color1);
     }
 
@@ -52,7 +50,7 @@ public class FallingSpike : MonoBehaviour
     {
         if ((spikeParams.playerMask.value & (1 << collider.transform.gameObject.layer)) > 0)
         {
-            playerCombat.TakeDamage(spikeParams.impactDamage);
+            PlayerCombat.instance.TakeDamage(spikeParams.impactDamage);
         }
     }
 

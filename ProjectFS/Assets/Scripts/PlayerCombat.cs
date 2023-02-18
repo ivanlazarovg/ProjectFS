@@ -31,6 +31,7 @@ public class PlayerCombat : MonoBehaviour
     public float chargedAttackStaminaDrain;
     public float chargedAttackKnockbackStrength = 5;
     public float chargedAttackKnockbackStrengthUp = 2;
+    public float rangedDamage;
 
     float attackTimer = 0;
     public float attackPauseTime;
@@ -83,6 +84,17 @@ public class PlayerCombat : MonoBehaviour
     public float staminaRegain;
 
     private Dictionary<KeyCode, int> missileModeKeys;
+
+    public static PlayerCombat instance { get; private set; }
+
+    private void Awake()
+    {
+        if (instance != null)
+        {
+            Debug.Log("More than one PlayerCombat");
+        }
+        instance = this;
+    }
 
     void Start()
     {
@@ -298,13 +310,13 @@ public class PlayerCombat : MonoBehaviour
 
     public void GainHealth(float healthAmount)
     {
-        if (healthBarSlider.value + healthAmount <= startHealth)
+        if (healthBarSlider.value + healthAmount <= healthBarSlider.maxValue)
         {
             healthBarSlider.value += healthAmount;
         }
         else
         {
-            healthBarSlider.value = startHealth;
+            healthBarSlider.value = healthBarSlider.maxValue;
         }
     }
 
@@ -344,11 +356,42 @@ public class PlayerCombat : MonoBehaviour
         }
     }
 
+    private void IncreaseMaxHealth()
+    {
+        healthBarSlider.maxValue += 15;
+    }
+
+    private void IncreaseMaxStamina()
+    {
+        staminaBarSlider.maxValue += 15;
+    }
+
+    public void IncreaseDamage(float _rangedDamage, float _lightAttackDamage, float _heavyAttackDamage)
+    {
+        rangedDamage += _rangedDamage;
+        lightAttackDamage += _lightAttackDamage;
+        chargedAttackDamage += _heavyAttackDamage;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "teleportUnlock")
+        if (other.gameObject.tag == "teleportUnlock")
         {
             missileModeKeys.Add(KeyCode.Alpha2, 2);
         }
+        if(other.gameObject.tag == "healthUnlock")
+        {
+            IncreaseMaxHealth();
+        }
+        if(other.gameObject.tag == "staminaUnlock")
+        {
+            IncreaseMaxStamina();
+        }
+        if(other.gameObject.GetComponent<DamageUnlock>())
+        {
+            DamageUnlock damageParams = other.gameObject.GetComponent<DamageUnlock>();
+            IncreaseDamage(damageParams.rangedDamage, damageParams.lightAttackDamage, damageParams.heavyAttackDamage);
+        }
+
     }
 }

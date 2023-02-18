@@ -26,7 +26,7 @@ public class LightProjectile : MonoBehaviour
     {
         if(collision.gameObject.GetComponent<Enemy>() != null)
         {
-            collision.gameObject.GetComponent<Enemy>().LoseHealth(1f);
+            collision.gameObject.GetComponent<Enemy>().LoseHealth(PlayerCombat.instance.rangedDamage);
             Destroy(this.gameObject);
         }
         collisionCounter++;

@@ -67,7 +67,7 @@ public class GroundLockedEnemy : Enemy
         if (Vector3.Distance(transform.position, playerTransform.position) <= enemyParams.distanceToAttack)
         {
             playerAnimator.SetTrigger("hurt");
-            playerAnimator.gameObject.GetComponent<PlayerCombat>().TakeDamage(enemyParams.attackDamage);
+            PlayerCombat.instance.TakeDamage(enemyParams.attackDamage);
         }
     }
 
