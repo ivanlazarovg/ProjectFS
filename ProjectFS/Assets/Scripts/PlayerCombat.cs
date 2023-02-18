@@ -117,6 +117,31 @@ public class PlayerCombat : MonoBehaviour
                 isAiming = true;
             }
             aimTransform.gameObject.GetComponentInChildren<MeshRenderer>().enabled = false;
+            if (missileMode == 1)
+            {
+                if (Input.GetMouseButtonDown(0) && canAttack)
+                {
+                    meleeAttackTimer += Time.deltaTime;
+                    characterAnimator.SetTrigger("attack");
+
+
+                }
+                else if (Input.GetMouseButtonDown(1) && canAttack)
+                {
+                    characterAnimator.SetTrigger("chargedAttack");
+
+                }
+            }
+            else if (missileMode == 2)
+            {
+                if (lastProjectile != null)
+                {
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        Teleport();
+                    }
+                }
+            }
         }
         else
         {
@@ -128,41 +153,16 @@ public class PlayerCombat : MonoBehaviour
                     LaunchProjectile();
                 }
 
-                isAiming = false;
+                
             }
         }
-
-        if (missileMode == 1)
-        {
-            if (Input.GetMouseButtonDown(0) && canAttack)
-            {
-                meleeAttackTimer += Time.deltaTime;
-                characterAnimator.SetTrigger("attack");
-
-
-            }
-            else if (Input.GetMouseButtonDown(1) && canAttack && !isAiming)
-            {
-                characterAnimator.SetTrigger("chargedAttack");
-
-            }
-        }
-        else if (missileMode == 2)
-        {
-            if (lastProjectile != null)
-            {
-                if (Input.GetMouseButtonDown(0))
-                {
-                    Teleport();
-                }
-            }
-        }
+       
 
         MissileModeInput();
 
         attackTimer += Time.deltaTime;
 
-        if (staminaTimer >= 2 && staminaBarSlider.value <= 100)
+        if (staminaTimer >= 2 && staminaBarSlider.value <= staminaBarSlider.maxValue)
         {
             RegainStamina();
         }
@@ -242,6 +242,7 @@ public class PlayerCombat : MonoBehaviour
 
         lightProjectile.GetComponent<Rigidbody>().velocity = direction.normalized * lightProjectile.GetComponent<LightProjectile>().speed;
         characterAnimator.SetTrigger("attack");
+        isAiming = false;
 
     }
 
@@ -378,19 +379,23 @@ public class PlayerCombat : MonoBehaviour
         if (other.gameObject.tag == "teleportUnlock")
         {
             missileModeKeys.Add(KeyCode.Alpha2, 2);
+            Destroy(other.gameObject);
         }
         if(other.gameObject.tag == "healthUnlock")
         {
             IncreaseMaxHealth();
+            Destroy(other.gameObject);
         }
         if(other.gameObject.tag == "staminaUnlock")
         {
             IncreaseMaxStamina();
+            Destroy(other.gameObject);
         }
         if(other.gameObject.GetComponent<DamageUnlock>())
         {
             DamageUnlock damageParams = other.gameObject.GetComponent<DamageUnlock>();
             IncreaseDamage(damageParams.rangedDamage, damageParams.lightAttackDamage, damageParams.heavyAttackDamage);
+            Destroy(other.gameObject);
         }
 
     }

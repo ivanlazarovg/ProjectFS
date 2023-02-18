@@ -4,31 +4,37 @@ using UnityEngine;
 
 public class PuzzlePlatforms : MonoBehaviour
 {
-    public int switchNumber;
     public PlatformsSwitch platformsSwitch;
 
     private MeshRenderer meshRenderer;
     private BoxCollider boxCollider;
 
+    public GameObject[] switchableObjects;
+
     private void Start()
     {
         meshRenderer = GetComponent<MeshRenderer>(); 
         boxCollider = GetComponent<BoxCollider>();
+        foreach(var item in switchableObjects)
+        {
+            item.transform.position = transform.position;
+        }
     }
 
     private void Update()
     {
-        if(platformsSwitch != null)
+        if(platformsSwitch != null && platformsSwitch.isActivated)
         {
-            if (platformsSwitch.platformSwitchMode == switchNumber)
+            for (int i = 0; i < switchableObjects.Length; i++)
             {
-                meshRenderer.enabled = true;
-                boxCollider.enabled = true;
-            }
-            else
-            {
-                meshRenderer.enabled = false;
-                boxCollider.enabled = false;
+                if(i == platformsSwitch.platformSwitchMode)
+                {
+                    switchableObjects[i].SetActive(true);
+                }
+                else
+                {
+                    switchableObjects[i].SetActive(false);
+                }
             }
         }
     }

@@ -7,5 +7,6 @@ public class PlatformSwitchParams : ScriptableObject
 {
     public Color switchColor1;
     public Color switchColor2;
+    public Color switchColor3;
     public Color unactivatedColor;
 }

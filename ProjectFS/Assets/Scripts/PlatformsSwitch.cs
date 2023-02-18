@@ -12,6 +12,7 @@ public class PlatformsSwitch : MonoBehaviour
     private Renderer meshRenderer;
     private MaterialPropertyBlock propertyBlock;
 
+
     private void Start()
     {
         meshRenderer = GetComponent<Renderer>();
@@ -24,29 +25,26 @@ public class PlatformsSwitch : MonoBehaviour
         {
             SetPropertyBlockColor(platformSwitchParams.unactivatedColor);
         }
-        else
-        {
-            if(platformSwitchMode == 0)
-            {
-                SetPropertyBlockColor(platformSwitchParams.switchColor1);
-            }
-            else if(platformSwitchMode == 1)
-            {
-                SetPropertyBlockColor(platformSwitchParams.switchColor2);
-            }
-        }
     }
 
     public void Switch()
     {
-        if(platformSwitchMode == 0)
+        if (platformSwitchMode == 0)
         {
-            platformSwitchMode = 1;     
+            platformSwitchMode = 1;
+            SetPropertyBlockColor(platformSwitchParams.switchColor1);
         }
-        else if(platformSwitchMode == 1)
+        else if (platformSwitchMode == 1)
         {
-            platformSwitchMode = 0;   
+            platformSwitchMode = 2;
+            SetPropertyBlockColor(platformSwitchParams.switchColor2);
+        } 
+        else if (platformSwitchMode == 2)
+        {
+            platformSwitchMode = 0;
+            SetPropertyBlockColor(platformSwitchParams.switchColor3);
         }
+
     }
 
     private void OnCollisionEnter(Collision collision)
