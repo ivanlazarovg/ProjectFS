@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 6d14f3cd94d0cec49b51e8af45fac89a
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Sunrise Point
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 4974e2aaf9c5e684fb19603f9fd2b387, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
