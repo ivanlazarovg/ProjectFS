@@ -11,7 +11,6 @@ public class PlayerInteraction : MonoBehaviour
     public Transform carryTransform;
     public LayerMask moveableObjectMask;
     private Collider[] moveableObjectColliders;
-    [HideInInspector]
     public RespawnPoint lastRespawnPoint;
     public Transform playerTransform;
     public TextMeshProUGUI textMesh;

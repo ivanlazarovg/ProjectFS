@@ -16,7 +16,7 @@ MonoBehaviour:
   knockbackRecoverySpeed: 0.5
   knockbackLerpTime: 0
   distanceToAttack: 0
-  attackDamage: 16
+  attackDamage: 8
   defaultSpeed: 0
   attackRange: 15
   playerMask:
