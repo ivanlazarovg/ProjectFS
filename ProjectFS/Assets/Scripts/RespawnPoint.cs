@@ -12,10 +12,10 @@ public class RespawnPoint : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        /*if (other.gameObject.GetComponent<PlayerCombat>())
+        if (other.gameObject.GetComponent<PlayerCombat>())
         {
             playerInteraction.lastRespawnPoint = this;
-        }*/
+        }
     }
 
     private void OnDrawGizmos()
