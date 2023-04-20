@@ -282,6 +282,7 @@ public class PlayerController : MonoBehaviour, IDataPersistence
 		#endregion
 
 		RayCastChecks();
+		MushroomJump();
 	}
 
 	private void FixedUpdate()
@@ -479,6 +480,25 @@ public class PlayerController : MonoBehaviour, IDataPersistence
 
 		RB.AddForce(movement * Vector2.up);
 	}*/
+
+    private void MushroomJump()
+    {
+        mushroomJumpTimer += Time.deltaTime;
+        RaycastHit hit;
+        if (Physics.Raycast(_groundCheckPoint.position, -transform.up, out hit, 0.2f, _mushroomLayer) && !mushroomJumpTriggered)
+        {
+            print("jumped");
+            Jump(hit.collider.gameObject.GetComponent<Mushroom>().impulseForce);
+            mushroomJumpTriggered = true;
+            mushroomJumpTimer = 0;
+        }
+
+        if (mushroomJumpTimer > 0.15f)
+        {
+            mushroomJumpTriggered = false;
+        }
+
+    }
 
     #endregion
 

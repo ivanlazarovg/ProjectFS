@@ -18,7 +18,7 @@ MonoBehaviour:
   distanceToAttack: 0
   attackDamage: 8
   defaultSpeed: 0
-  attackRange: 15
+  attackRange: 15.16
   playerMask:
     serializedVersion: 2
     m_Bits: 1024
