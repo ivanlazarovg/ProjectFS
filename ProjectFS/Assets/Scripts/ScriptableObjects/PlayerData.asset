@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   gravityStrength: -43.375
-  gravity: -30
+  gravity: -30.69
   fallGravity: -40
   maxFallSpeed: 25
   fastFallGravity: -50
@@ -29,7 +29,7 @@ MonoBehaviour:
   jumpHeight: 3.47
   jumpTimeToApex: 0.4
   jumpForce: 17.35
-  jumpCutGravity: -50
+  jumpCutGravity: -40
   jumpHangGravity: -26.68
   jumpHangTimeThreshold: 1
   jumpHangAccelerationMult: 1.09
