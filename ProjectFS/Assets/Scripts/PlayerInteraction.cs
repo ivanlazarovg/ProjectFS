@@ -15,7 +15,9 @@ public class PlayerInteraction : MonoBehaviour
     public Transform playerTransform;
     public TextMeshProUGUI textMesh;
     public LayerMask narrativeObjectMask;
+    public LayerMask UIMask;
     private Collider[] narrativeObjectColliders;
+    private Collider[] UIObjectColliders;
     private bool isMovingObject = false;
     public Color highlightColor;
 
@@ -24,6 +26,7 @@ public class PlayerInteraction : MonoBehaviour
     public InteractionUI interactionUI;
     public Camera objectCloseUpCam;
     private Camera mainCam;
+    private FallingPlatform[] fallingPlatforms;
 
     [SerializeField]
     private float narrObjectInteractionRadius;
@@ -42,7 +45,7 @@ public class PlayerInteraction : MonoBehaviour
 
     private void Start()
     {
-
+        fallingPlatforms = FindObjectsOfType<FallingPlatform>();
         playerTransform = GameObject.Find("Player").transform;
         objectCloseUpCam.enabled = false;
         mainCam = Camera.main;
@@ -71,6 +74,10 @@ public class PlayerInteraction : MonoBehaviour
         playerTransform.GetComponent<PlayerCombat>().healthBarSlider.value = 100;
         playerTransform.GetComponent<PlayerController>().enabled = true;
         playerTransform.GetChild(0).gameObject.SetActive(true);
+        foreach(var item in fallingPlatforms)
+        {
+            item.gameObject.SetActive(true);
+        }
         textMesh.enabled = false;
     }
 

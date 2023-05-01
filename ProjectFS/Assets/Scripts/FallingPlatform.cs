@@ -39,7 +39,7 @@ public class FallingPlatform : MonoBehaviour
 
         yield return new WaitForSeconds(fallingPlatformParams.fallThreshold);
 
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
     private void SetPropertyBlockColor(Color color)

@@ -36,13 +36,8 @@ public class PlatformsSwitch : MonoBehaviour
         }
         else if (platformSwitchMode == 1)
         {
-            platformSwitchMode = 2;
-            SetPropertyBlockColor(platformSwitchParams.switchColor2);
-        } 
-        else if (platformSwitchMode == 2)
-        {
             platformSwitchMode = 0;
-            SetPropertyBlockColor(platformSwitchParams.switchColor3);
+            SetPropertyBlockColor(platformSwitchParams.switchColor2);
         }
 
     }
