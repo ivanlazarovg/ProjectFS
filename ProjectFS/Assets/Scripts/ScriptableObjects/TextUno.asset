@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99cbb2ddcd392f94195e68badada343e, type: 3}
   m_Name: TextUno
   m_EditorClassIdentifier: 
-  text: You must be weary now...
+  text: 'You have reached the temporary end of your journey. '

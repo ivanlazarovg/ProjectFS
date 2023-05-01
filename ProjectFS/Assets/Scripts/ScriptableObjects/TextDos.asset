@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99cbb2ddcd392f94195e68badada343e, type: 3}
   m_Name: TextDos
   m_EditorClassIdentifier: 
-  text: Look behind you
+  text: Take a moment to rest and reflect on your adventures so far, for there are
+    many more to come.

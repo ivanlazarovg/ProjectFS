@@ -34,6 +34,8 @@ public class PlayerInteraction : MonoBehaviour
     public static PlayerInteraction instance { get; private set; }
 
 
+
+
     private void Awake()
     {
         if(instance != null)
@@ -149,14 +151,14 @@ public class PlayerInteraction : MonoBehaviour
         }
     }
 
-    public void DisengageInspect(Transform playerTransform, GameObject objectInspect)
+    public void DisengageInspect()
     {
-        objectInspect.SetActive(false);
         objectCloseUpCam.enabled = false;
         mainCam.enabled = true;
         playerTransform.GetComponent<PlayerCombat>().enabled = true;
         playerTransform.GetComponent<PlayerController>().enabled = true;
         FindObjectOfType<PlayerInteraction>().enabled = true;
+        
     }
 
 
