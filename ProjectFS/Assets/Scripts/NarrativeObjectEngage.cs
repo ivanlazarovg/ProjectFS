@@ -91,7 +91,7 @@ public class NarrativeObjectEngage : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            readableText.text = string.Empty;
+            //readableText.text = string.Empty;
             PlayerInteraction.instance.DisengageInspect();
             this.gameObject.SetActive(false);
         }

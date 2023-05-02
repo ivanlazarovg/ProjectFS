@@ -11,6 +11,6 @@ public class GameData
     // the game starts with when there's no data to load
     public GameData()
     {
-        playerPosition = new Vector3(29.21f, 4.58f, -3.584f);
+        playerPosition = new Vector3(3.21f, 4.58f, -3.584f);
     }
 }
