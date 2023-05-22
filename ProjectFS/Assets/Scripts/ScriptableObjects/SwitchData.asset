@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4507841e75e1f54b9112370c8c9bedb, type: 3}
   m_Name: SwitchData
   m_EditorClassIdentifier: 
-  switchColor1: {r: 0.735849, g: 0, b: 0.42819694, a: 0}
+  switchColor1: {r: 0.6619415, g: 0, b: 0.7372549, a: 0}
   switchColor2: {r: 0, g: 0.4339623, b: 0.09802057, a: 0}
   switchColor3: {r: 0.0047169924, g: 0.52540827, b: 1, a: 0}
   unactivatedColor: {r: 0.5188679, g: 0.5188679, b: 0.5188679, a: 0}
