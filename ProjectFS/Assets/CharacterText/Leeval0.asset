@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37c0e153d38689341a0960d8321a41ea, type: 3}
   m_Name: Leeval0
   m_EditorClassIdentifier: 
-  speech: {fileID: 0}
+  speech: {fileID: 4900000, guid: 97914aa32939d9446bfd1472514fdbcd, type: 3}
   responses: []
   nextSpeech: {fileID: 0}
   hasResponseAttached: 0
